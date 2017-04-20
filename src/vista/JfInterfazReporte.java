@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JfInterfazReporte extends javax.swing.JInternalFrame {
 
-    ControlReporte reporteC = new ControlReporte();
+    ControlReporte controlReporte = new ControlReporte();
     DefaultTableModel modelo1;
     DefaultTableModel modelo2;
     DefaultTableModel modelo3;
@@ -277,7 +277,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
 
     public void mostrarDatos(String buscar) {
 
-        modelo1 = reporteC.mostrarDatos(buscar);
+        modelo1 = controlReporte.mostrarDatos(buscar);
         tbReporte.setModel(modelo1);
         tbReporte.getColumnModel().getColumn(0).setMaxWidth(0);
         tbReporte.getColumnModel().getColumn(0).setMinWidth(0);
@@ -287,7 +287,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
 
     public void mostrarDatos2(String buscar) {
 
-        modelo2 = reporteC.mostrarDatos2(buscar);
+        modelo2 = controlReporte.mostrarDatos2(buscar);
         tbReporte.setModel(modelo2);
         tbReporte.getColumnModel().getColumn(0).setMaxWidth(0);
         tbReporte.getColumnModel().getColumn(0).setMinWidth(0);
@@ -297,7 +297,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
 
     public void mostrarDatos3(String buscar) {
 
-        modelo3 = reporteC.mostrarDatos3(buscar);
+        modelo3 = controlReporte.mostrarDatos3(buscar);
         tbReporte.setModel(modelo3);
         tbReporte.getColumnModel().getColumn(0).setMaxWidth(0);
         tbReporte.getColumnModel().getColumn(0).setMinWidth(0);
@@ -320,7 +320,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
         cbxMaestro.addItem("Selecciona Maestro");
 
         try {
-            ResultSet rs = reporteC.cargaComboMaestro();
+            ResultSet rs = controlReporte.cargaComboMaestro();
             while (rs.next()) {
 
                 cbxMaestro.addItem(rs.getString("Nombre") + " " + rs.getString("ApellidoPaterno") + " " + rs.getString("ApellidoMaterno") + " ");//  consulta  id  traer
@@ -338,7 +338,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
         cbxGrupo.addItem("Selecciona Grupo");
 
         try {
-            ResultSet rs = reporteC.cargaComboGrupo();
+            ResultSet rs = controlReporte.cargaComboGrupo();
             while (rs.next()) {
 
                 cbxGrupo.addItem(rs.getString("NumGrupo") + " ");
@@ -357,7 +357,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
         cbxSalon.addItem("Selecciona Salon");
 
         try {
-            ResultSet rs = reporteC.cargaComboSalon();
+            ResultSet rs = controlReporte.cargaComboSalon();
             while (rs.next()) {
 
                 cbxSalon.addItem(rs.getString("NumSalon") + " ");
@@ -408,18 +408,44 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-
-        try {
-            //Mensaje de encabezado
-            MessageFormat headerFormat = new MessageFormat("impresion de la Tabla");
-            //Mensaje en el pie de pagina
-            MessageFormat footerFormat = new MessageFormat("ContreSpace");
-            //Imprimir JTable
-            tbReporte.print(JTable.PrintMode.NORMAL, headerFormat, footerFormat);
-        } catch (PrinterException ex) {
-            Logger.getLogger(JfInterfazReporte.class.getName()).log(Level.SEVERE, null, ex);
+        
+        if (cbxMaestro.getSelectedIndex() == 0 && cbxGrupo.getSelectedIndex() == 0 && cbxSalon.getSelectedIndex() == 0) {
+            JOptionPane.showConfirmDialog(rootPane, "Debes seleccionar una opción");
+           
         }
+         if (cbxMaestro.getSelectedIndex() != 0) {
 
+            Object numEmpleado = this.idMaestro.get(cbxMaestro.getSelectedIndex() - 1).toString();
+             int id = Integer.parseInt((String) numEmpleado);
+              System.out.println("id" + id);
+                controlReporte.reporteMaestro(id);
+
+            cbxGrupo.setEnabled(false);
+            cbxSalon.setEnabled(false);
+
+        }
+          if (cbxGrupo.getSelectedIndex() != 0) {
+            Object numGrupo = this.idGrupos.get(cbxGrupo.getSelectedIndex() - 1).toString();
+             int id = Integer.parseInt((String)  numGrupo);
+              System.out.println("id" + id);
+                controlReporte.reporteGrupo(id);
+
+            cbxMaestro.setEnabled(false);
+            cbxSalon.setEnabled(false);
+
+        }
+          if (cbxSalon.getSelectedIndex() != 0) {
+            
+            Object numSalon = this.claveSalon.get(cbxSalon.getSelectedIndex() - 1).toString();
+             int id = Integer.parseInt((String) numSalon);
+              System.out.println("id" + id);
+                controlReporte.reporteSalon(id);
+
+            cbxMaestro.setEnabled(false);
+            cbxGrupo.setEnabled(false);
+
+        }
+      
 
     }//GEN-LAST:event_btnImprimirActionPerformed
 
