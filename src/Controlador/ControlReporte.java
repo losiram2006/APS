@@ -76,7 +76,7 @@ public class ControlReporte {
             CONEXION = DriverManager.getConnection(RUTA, USER, PASSWORD);
             javax.swing.JOptionPane.showMessageDialog(null, "Conexion establecida");
 
-            String template = "C:\\Users\\Marisol\\Documents\\ClockSistem\\src\\vista\\reporte.jasper";
+            String template = "#";
 
             System.out.println("template " + template);
             JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(template);
@@ -105,7 +105,7 @@ public class ControlReporte {
             CONEXION = DriverManager.getConnection(RUTA, USER, PASSWORD);
             javax.swing.JOptionPane.showMessageDialog(null, "Conexion establecida");
 
-            String template = "C:\\Users\\Marisol\\Documents\\ClockSistem\\src\\vista\\reporte.jasper";
+            String template = "#";
 
             System.out.println("template " + template);
             JasperReport reporte = (JasperReport) JRLoader.loadObjectFromFile(template);
@@ -128,143 +128,143 @@ public class ControlReporte {
     }
 
     /*Método que muestra los datos   en la tabla*/
-    public DefaultTableModel mostrarDatos(String maestro) {
-        int idHorario = 0;
-        DefaultTableModel modelo = new DefaultTableModel();
-        try {
-            modelo.addColumn("idHorario");
-            modelo.addColumn("Maestro");
-            modelo.addColumn("Materia");
-            modelo.addColumn("Grupo");
-            modelo.addColumn("Dia");
-            modelo.addColumn("Hora");
-
-            if (maestro.equals("")) {
-                sSQL = "select idHorario, Nombre, ApellidoPaterno, ApellidoMaterno, NombreMateria, Grupo_NumGrupo, Dia, Hora from horario, maestro, materia, grupo, salon WHERE  horario.Maestro_NumeroEmpleado=maestro.NumeroEmpleado and horario.Materia_ClaveMateria=materia.ClaveMateria and horario.Salon_NumSalon=salon.NumSalon and horario.Grupo_NumGrupo=grupo.NumGrupo;";
-
-            } else if (maestro.equals(maestro)) {
-                sSQL = "select idHorario, maestro.Nombre, maestro.ApellidoPaterno, maestro.ApellidoMaterno, materia.NombreMateria, Grupo_NumGrupo, Dia, Hora  from horario inner join materia on materia.ClaveMateria = horario.Materia_ClaveMateria inner join maestro on maestro.NumeroEmpleado=horario.Maestro_NumeroEmpleado where Maestro_NumeroEmpleado like '%" + maestro + "%';";
-            }
-
-            String[] Horarios = new String[6];
-
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(sSQL);
-            System.out.println("el primer mostrar" + sSQL);
-
-            while (rs.next()) {
-                idHorario = Integer.parseInt(rs.getString(1));
-                Horarios[0] = rs.getString("idHorario");
-                Horarios[1] = rs.getString("Nombre") + " " + rs.getString("ApellidoPaterno") + " " + rs.getString("ApellidoMaterno") + " ";//  consulta  id  traer
-                Horarios[2] = rs.getString("NombreMateria") + " ";
-                Horarios[3] = rs.getString("Grupo_NumGrupo") + " ";
-                Horarios[4] = rs.getString("Dia");
-                Horarios[5] = rs.getString("Hora");
-                modelo.addRow(Horarios);
-            }
-
-            return modelo;
-
-        } catch (SQLException | NumberFormatException e) {
-            JOptionPane.showConfirmDialog(null, e);
-
-        }
-        return null;
-    }
-
-    public DefaultTableModel mostrarDatos2(String grupo) {
-        int idHorario = 0;
-        DefaultTableModel modelo = new DefaultTableModel();
-        try {
-            modelo.addColumn("idHorario");
-            modelo.addColumn("Maestro");
-            modelo.addColumn("Materia");
-            modelo.addColumn("Salon");
-            modelo.addColumn("Dia");
-            modelo.addColumn("Hora");
-
-            if (grupo.equals("")) {
-                sSQL = "select idHorario, Nombre, ApellidoPaterno, ApellidoMaterno, NombreMateria, NumGrupo, Dia, Hora from horario, maestro, materia, grupo, salon WHERE  horario.Maestro_NumeroEmpleado=maestro.NumeroEmpleado and horario.Materia_ClaveMateria=materia.ClaveMateria and horario.Salon_NumSalon=salon.NumSalon and horario.Grupo_NumGrupo=grupo.NumGrupo;";
-
-            } else {
-                if (grupo.equals(grupo)) {
-                    sSQL = "select idHorario, maestro.Nombre, maestro.ApellidoPaterno, maestro.ApellidoMaterno, materia.NombreMateria, Salon_NumSalon, Dia, Hora  from horario inner join materia on materia.ClaveMateria = horario.Materia_ClaveMateria inner join maestro on maestro.NumeroEmpleado=horario.Maestro_NumeroEmpleado where  Grupo_NumGrupo like '%" + grupo + "%';";
-                }
-            }
-            String[] Horarios = new String[6];
-
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(sSQL);
-            System.out.println("el primer mostrar" + sSQL);
-
-            while (rs.next()) {
-                idHorario = Integer.parseInt(rs.getString(1));
-                Horarios[0] = rs.getString("idHorario");
-                Horarios[1] = rs.getString("Nombre") + " " + rs.getString("ApellidoPaterno") + " " + rs.getString("ApellidoMaterno") + " ";//  consulta  id  traer
-                Horarios[2] = rs.getString("NombreMateria") + " ";
-                Horarios[3] = rs.getString("Salon_NumSalon") + " ";
-                Horarios[4] = rs.getString("Dia");
-                Horarios[5] = rs.getString("Hora");
-
-                modelo.addRow(Horarios);
-
-            }
-
-            return modelo;
-
-        } catch (SQLException | NumberFormatException e) {
-            JOptionPane.showConfirmDialog(null, e);
-
-        }
-        return null;
-    }
-
-    public DefaultTableModel mostrarDatos3(String salon) {
-        int idHorario = 0;
-        DefaultTableModel modelo = new DefaultTableModel();
-        try {
-            modelo.addColumn("idHorario");
-            modelo.addColumn("Maestro");
-            modelo.addColumn("Materia");
-            modelo.addColumn("Grupo");
-            modelo.addColumn("Dia");
-            modelo.addColumn("Hora");
-            if (salon.equals("")) {
-                sSQL = "select idHorario, Nombre, ApellidoPaterno, ApellidoMaterno, NombreMateria, Grupo_NumGrupo, Dia, Hora from horario, maestro, materia, grupo, salon WHERE  horario.Maestro_NumeroEmpleado=maestro.NumeroEmpleado and horario.Materia_ClaveMateria=materia.ClaveMateria and horario.Salon_NumSalon=salon.NumSalon and horario.Grupo_NumGrupo=grupo.NumGrupo;";
-
-            } else {
-                if (salon.equals(salon)) {
-                    sSQL = "select idHorario, maestro.Nombre, maestro.ApellidoPaterno, maestro.ApellidoMaterno, materia.NombreMateria, Grupo_NumGrupo, Dia, Hora  from horario inner join materia on materia.ClaveMateria = horario.Materia_ClaveMateria inner join maestro on maestro.NumeroEmpleado=horario.Maestro_NumeroEmpleado where  Salon_NumSalon like '%" + salon + "%';";
-                }
-            }
-            String[] Horarios = new String[6];
-
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(sSQL);
-            System.out.println("el primer mostrar" + sSQL);
-
-            while (rs.next()) {
-                idHorario = Integer.parseInt(rs.getString(1));
-                Horarios[0] = rs.getString("idHorario");
-                Horarios[1] = rs.getString("Nombre") + " " + rs.getString("ApellidoPaterno") + " " + rs.getString("ApellidoMaterno") + " ";//  consulta  id  traer
-                Horarios[2] = rs.getString("NombreMateria") + " ";
-                Horarios[3] = rs.getString("Grupo_NumGrupo") + " ";
-                Horarios[4] = rs.getString("Dia");
-                Horarios[5] = rs.getString("Hora");
-
-                modelo.addRow(Horarios);
-
-            }
-
-            return modelo;
-
-        } catch (SQLException | NumberFormatException e) {
-            JOptionPane.showConfirmDialog(null, e);
-
-        }
-        return null;
-    }
-////
+//    public DefaultTableModel mostrarDatos(String maestro) {
+//        int idHorario = 0;
+//        DefaultTableModel modelo = new DefaultTableModel();
+//        try {
+//            modelo.addColumn("idHorario");
+//            modelo.addColumn("Maestro");
+//            modelo.addColumn("Materia");
+//            modelo.addColumn("Grupo");
+//            modelo.addColumn("Dia");
+//            modelo.addColumn("Hora");
+//
+//            if (maestro.equals("")) {
+//                sSQL = "select idHorario, Nombre, ApellidoPaterno, ApellidoMaterno, NombreMateria, Grupo_NumGrupo, Dia, Hora from horario, maestro, materia, grupo, salon WHERE  horario.Maestro_NumeroEmpleado=maestro.NumeroEmpleado and horario.Materia_ClaveMateria=materia.ClaveMateria and horario.Salon_NumSalon=salon.NumSalon and horario.Grupo_NumGrupo=grupo.NumGrupo;";
+//
+//            } else if (maestro.equals(maestro)) {
+//                sSQL = "select idHorario, maestro.Nombre, maestro.ApellidoPaterno, maestro.ApellidoMaterno, materia.NombreMateria, Grupo_NumGrupo, Dia, Hora  from horario inner join materia on materia.ClaveMateria = horario.Materia_ClaveMateria inner join maestro on maestro.NumeroEmpleado=horario.Maestro_NumeroEmpleado where Maestro_NumeroEmpleado like '%" + maestro + "%';";
+//            }
+//
+//            String[] Horarios = new String[6];
+//
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(sSQL);
+//            System.out.println("el primer mostrar" + sSQL);
+//
+//            while (rs.next()) {
+//                idHorario = Integer.parseInt(rs.getString(1));
+//                Horarios[0] = rs.getString("idHorario");
+//                Horarios[1] = rs.getString("Nombre") + " " + rs.getString("ApellidoPaterno") + " " + rs.getString("ApellidoMaterno") + " ";//  consulta  id  traer
+//                Horarios[2] = rs.getString("NombreMateria") + " ";
+//                Horarios[3] = rs.getString("Grupo_NumGrupo") + " ";
+//                Horarios[4] = rs.getString("Dia");
+//                Horarios[5] = rs.getString("Hora");
+//                modelo.addRow(Horarios);
+//            }
+//
+//            return modelo;
+//
+//        } catch (SQLException | NumberFormatException e) {
+//            JOptionPane.showConfirmDialog(null, e);
+//
+//        }
+//        return null;
+//    }
+//
+//    public DefaultTableModel mostrarDatos2(String grupo) {
+//        int idHorario = 0;
+//        DefaultTableModel modelo = new DefaultTableModel();
+//        try {
+//            modelo.addColumn("idHorario");
+//            modelo.addColumn("Maestro");
+//            modelo.addColumn("Materia");
+//            modelo.addColumn("Salon");
+//            modelo.addColumn("Dia");
+//            modelo.addColumn("Hora");
+//
+//            if (grupo.equals("")) {
+//                sSQL = "select idHorario, Nombre, ApellidoPaterno, ApellidoMaterno, NombreMateria, NumGrupo, Dia, Hora from horario, maestro, materia, grupo, salon WHERE  horario.Maestro_NumeroEmpleado=maestro.NumeroEmpleado and horario.Materia_ClaveMateria=materia.ClaveMateria and horario.Salon_NumSalon=salon.NumSalon and horario.Grupo_NumGrupo=grupo.NumGrupo;";
+//
+//            } else {
+//                if (grupo.equals(grupo)) {
+//                    sSQL = "select idHorario, maestro.Nombre, maestro.ApellidoPaterno, maestro.ApellidoMaterno, materia.NombreMateria, Salon_NumSalon, Dia, Hora  from horario inner join materia on materia.ClaveMateria = horario.Materia_ClaveMateria inner join maestro on maestro.NumeroEmpleado=horario.Maestro_NumeroEmpleado where  Grupo_NumGrupo like '%" + grupo + "%';";
+//                }
+//            }
+//            String[] Horarios = new String[6];
+//
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(sSQL);
+//            System.out.println("el primer mostrar" + sSQL);
+//
+//            while (rs.next()) {
+//                idHorario = Integer.parseInt(rs.getString(1));
+//                Horarios[0] = rs.getString("idHorario");
+//                Horarios[1] = rs.getString("Nombre") + " " + rs.getString("ApellidoPaterno") + " " + rs.getString("ApellidoMaterno") + " ";//  consulta  id  traer
+//                Horarios[2] = rs.getString("NombreMateria") + " ";
+//                Horarios[3] = rs.getString("Salon_NumSalon") + " ";
+//                Horarios[4] = rs.getString("Dia");
+//                Horarios[5] = rs.getString("Hora");
+//
+//                modelo.addRow(Horarios);
+//
+//            }
+//
+//            return modelo;
+//
+//        } catch (SQLException | NumberFormatException e) {
+//            JOptionPane.showConfirmDialog(null, e);
+//
+//        }
+//        return null;
+//    }
+//
+//    public DefaultTableModel mostrarDatos3(String salon) {
+//        int idHorario = 0;
+//        DefaultTableModel modelo = new DefaultTableModel();
+//        try {
+//            modelo.addColumn("idHorario");
+//            modelo.addColumn("Maestro");
+//            modelo.addColumn("Materia");
+//            modelo.addColumn("Grupo");
+//            modelo.addColumn("Dia");
+//            modelo.addColumn("Hora");
+//            if (salon.equals("")) {
+//                sSQL = "select idHorario, Nombre, ApellidoPaterno, ApellidoMaterno, NombreMateria, Grupo_NumGrupo, Dia, Hora from horario, maestro, materia, grupo, salon WHERE  horario.Maestro_NumeroEmpleado=maestro.NumeroEmpleado and horario.Materia_ClaveMateria=materia.ClaveMateria and horario.Salon_NumSalon=salon.NumSalon and horario.Grupo_NumGrupo=grupo.NumGrupo;";
+//
+//            } else {
+//                if (salon.equals(salon)) {
+//                    sSQL = "select idHorario, maestro.Nombre, maestro.ApellidoPaterno, maestro.ApellidoMaterno, materia.NombreMateria, Grupo_NumGrupo, Dia, Hora  from horario inner join materia on materia.ClaveMateria = horario.Materia_ClaveMateria inner join maestro on maestro.NumeroEmpleado=horario.Maestro_NumeroEmpleado where  Salon_NumSalon like '%" + salon + "%';";
+//                }
+//            }
+//            String[] Horarios = new String[6];
+//
+//            Statement st = connection.createStatement();
+//            ResultSet rs = st.executeQuery(sSQL);
+//            System.out.println("el primer mostrar" + sSQL);
+//
+//            while (rs.next()) {
+//                idHorario = Integer.parseInt(rs.getString(1));
+//                Horarios[0] = rs.getString("idHorario");
+//                Horarios[1] = rs.getString("Nombre") + " " + rs.getString("ApellidoPaterno") + " " + rs.getString("ApellidoMaterno") + " ";//  consulta  id  traer
+//                Horarios[2] = rs.getString("NombreMateria") + " ";
+//                Horarios[3] = rs.getString("Grupo_NumGrupo") + " ";
+//                Horarios[4] = rs.getString("Dia");
+//                Horarios[5] = rs.getString("Hora");
+//
+//                modelo.addRow(Horarios);
+//
+//            }
+//
+//            return modelo;
+//
+//        } catch (SQLException | NumberFormatException e) {
+//            JOptionPane.showConfirmDialog(null, e);
+//
+//        }
+//        return null;
+//    }
+//////
 ////
 
     /*Metodo  que regresa   los  datos  de la tabla de Maestro */

@@ -36,7 +36,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
         obtenerSalon();
         obtenerGrupo();
         obtenerMaestros();
-        mostrarDatos("");
+//        mostrarDatos("");
 
     }
 
@@ -275,35 +275,35 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
         cbxMaestro.setEnabled(true);
     }
 
-    public void mostrarDatos(String buscar) {
-
-        modelo1 = controlReporte.mostrarDatos(buscar);
-        tbReporte.setModel(modelo1);
-        tbReporte.getColumnModel().getColumn(0).setMaxWidth(0);
-        tbReporte.getColumnModel().getColumn(0).setMinWidth(0);
-        tbReporte.getColumnModel().getColumn(0).setPreferredWidth(0);
-
-    }
-
-    public void mostrarDatos2(String buscar) {
-
-        modelo2 = controlReporte.mostrarDatos2(buscar);
-        tbReporte.setModel(modelo2);
-        tbReporte.getColumnModel().getColumn(0).setMaxWidth(0);
-        tbReporte.getColumnModel().getColumn(0).setMinWidth(0);
-        tbReporte.getColumnModel().getColumn(0).setPreferredWidth(0);
-
-    }
-
-    public void mostrarDatos3(String buscar) {
-
-        modelo3 = controlReporte.mostrarDatos3(buscar);
-        tbReporte.setModel(modelo3);
-        tbReporte.getColumnModel().getColumn(0).setMaxWidth(0);
-        tbReporte.getColumnModel().getColumn(0).setMinWidth(0);
-        tbReporte.getColumnModel().getColumn(0).setPreferredWidth(0);
-
-    }
+//    public void mostrarDatos(String buscar) {
+//
+//        modelo1 = controlReporte.mostrarDatos(buscar);
+//        tbReporte.setModel(modelo1);
+//        tbReporte.getColumnModel().getColumn(0).setMaxWidth(0);
+//        tbReporte.getColumnModel().getColumn(0).setMinWidth(0);
+//        tbReporte.getColumnModel().getColumn(0).setPreferredWidth(0);
+//
+//    }
+//
+//    public void mostrarDatos2(String buscar) {
+//
+//        modelo2 = controlReporte.mostrarDatos2(buscar);
+//        tbReporte.setModel(modelo2);
+//        tbReporte.getColumnModel().getColumn(0).setMaxWidth(0);
+//        tbReporte.getColumnModel().getColumn(0).setMinWidth(0);
+//        tbReporte.getColumnModel().getColumn(0).setPreferredWidth(0);
+//
+//    }
+//
+//    public void mostrarDatos3(String buscar) {
+//
+//        modelo3 = controlReporte.mostrarDatos3(buscar);
+//        tbReporte.setModel(modelo3);
+//        tbReporte.getColumnModel().getColumn(0).setMaxWidth(0);
+//        tbReporte.getColumnModel().getColumn(0).setMinWidth(0);
+//        tbReporte.getColumnModel().getColumn(0).setPreferredWidth(0);
+//
+//    }
 
     public void limpiarCampos() {
 
@@ -381,29 +381,29 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         // TODO add your handling code here:
-        if (cbxMaestro.getSelectedIndex() == 0 && cbxGrupo.getSelectedIndex() == 0 && cbxSalon.getSelectedIndex() == 0) {
-            JOptionPane.showConfirmDialog(rootPane, "Debes seleccionar una opción");
-
-        }
-        if (cbxMaestro.getSelectedIndex() != 0) {
-            Object numEmpleado = this.idMaestro.get(cbxMaestro.getSelectedIndex() - 1).toString();
-            mostrarDatos((String) numEmpleado);
-            cbxGrupo.setEnabled(false);
-            cbxSalon.setEnabled(false);
-
-        }
-        if (cbxGrupo.getSelectedIndex() != 0) {
-            Object grupo = this.idGrupos.get(cbxGrupo.getSelectedIndex() - 1).toString();
-            mostrarDatos2((String) grupo);
-            cbxMaestro.setEnabled(false);
-            cbxSalon.setEnabled(false);
-        }
-        if (cbxSalon.getSelectedIndex() != 0) {
-            Object salon = this.claveSalon.get(cbxSalon.getSelectedIndex() - 1).toString();
-            mostrarDatos3((String) salon);
-            cbxGrupo.setEnabled(false);
-            cbxMaestro.setEnabled(false);
-        }
+//        if (cbxMaestro.getSelectedIndex() == 0 && cbxGrupo.getSelectedIndex() == 0 && cbxSalon.getSelectedIndex() == 0) {
+//            JOptionPane.showConfirmDialog(rootPane, "Debes seleccionar una opción");
+//
+//        }
+//        if (cbxMaestro.getSelectedIndex() != 0) {
+//            Object numEmpleado = this.idMaestro.get(cbxMaestro.getSelectedIndex() - 1).toString();
+//            mostrarDatos((String) numEmpleado);
+//            cbxGrupo.setEnabled(false);
+//            cbxSalon.setEnabled(false);
+//
+//        }
+//        if (cbxGrupo.getSelectedIndex() != 0) {
+//            Object grupo = this.idGrupos.get(cbxGrupo.getSelectedIndex() - 1).toString();
+//            mostrarDatos2((String) grupo);
+//            cbxMaestro.setEnabled(false);
+//            cbxSalon.setEnabled(false);
+//        }
+//        if (cbxSalon.getSelectedIndex() != 0) {
+//            Object salon = this.claveSalon.get(cbxSalon.getSelectedIndex() - 1).toString();
+//            mostrarDatos3((String) salon);
+//            cbxGrupo.setEnabled(false);
+//            cbxMaestro.setEnabled(false);
+//        }
 
     }//GEN-LAST:event_btnConsultarActionPerformed
 

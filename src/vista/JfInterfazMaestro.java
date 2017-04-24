@@ -284,7 +284,7 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
         lbHorasAsignadas.setText("Horas Asignadas:");
 
         cbxHorasAsignadas.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
-        cbxHorasAsignadas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Ninguno)", "Jornada 20 HRS", "Jornada 30 HRS", "Jornada 40 HRS" }));
+        cbxHorasAsignadas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Ninguno)", "1 hrs", "2 hrs", "3 hrs", "4 hrs", "5 hrs", "6 hrs", "7 hrs", "8 hrs", "9 hrs", "10 hrs", "11 hrs", "12 hrs", "13 hrs", "14 hrs", "15 hrs", "16 hrs", "17 hrs", "18 hrs", "19 hrs", "20 hrs", "21 hrs", "22 hrs", "23 hrs", "24 hrs", "25 hrs", "26 hrs", "27 hrs", "28 hrs", "29 hrs", "30 hrs", "31 hrs", "32 hrs", "33 hrs", "34 hrs", "35 hrs", "36 hrs", "37 hrs", "38 hrs", "39 hrs", "40 hrs" }));
         cbxHorasAsignadas.setToolTipText("Ingrese horas asignadas al Maestro a la semana");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

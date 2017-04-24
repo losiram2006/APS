@@ -25,7 +25,7 @@ public class ControlSalon {
     private Conexion mysql = new Conexion();
     private Connection cn = mysql.conectar();
     private String sSQL = "";
-
+//               HU01 Debo registrar un salón
     public boolean RegistrarSalon(EntidadSalon dts) {
         sSQL = "insert into salon (NumSalon)" + "values (?)";
 
@@ -40,7 +40,7 @@ public class ControlSalon {
             } else {
                 return false;
             }
-
+// HU01 Debo ver si Numero de salón existe
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
 
@@ -78,7 +78,7 @@ public class ControlSalon {
         }
 
     }
-
+//                HU03 Debe poder eliminar un salón
     public boolean eliminarSalon(EntidadSalon dts) {
         sSQL = "delete from salon where NumSalon=?";
         try {
@@ -99,7 +99,7 @@ public class ControlSalon {
         }
 
     }
-
+//                 HU02 Debo poder modificar un salón existente
     public boolean modificarSalon(EntidadSalon dts, int buscar) {
         sSQL = "update Salon set NumSalon=? where NumSalon like '%" + buscar + "%'";
         try {
@@ -120,7 +120,7 @@ public class ControlSalon {
         }
 
     }
-
+//            HU01 Debo consultar al menos un numero de  salon
     public String consultarSalonEspecifico(String buscar) throws SQLException {
         String cadena = "";
 
@@ -144,16 +144,16 @@ public class ControlSalon {
         }
 
     }
-
+// HU03 Debe validar si  tiene un horario  asignado antes de eliminar
     public int consultarSalonTieneHorario(int salon) throws SQLException {
         int cadena = 0;
 
-        sSQL = "select Salon_NumSalon  from horario where Salon_NumSalon like '%" + salon + "%';";
+        sSQL = "select NumSalon  from horario where NumSalon like '%" + salon + "%';";
         Statement st = cn.createStatement();
         ResultSet rs = st.executeQuery(sSQL);
 
         while (rs.next()) {
-            int numSalon = rs.getInt("Salon_NumSalon");
+            int numSalon = rs.getInt("NumSalon");
 
             cadena = cadena + numSalon;
         }

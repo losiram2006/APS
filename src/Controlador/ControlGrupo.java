@@ -16,10 +16,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author julve
- */
+
 public class ControlGrupo {
 
     private Conexion mysql = new Conexion();
@@ -35,14 +32,14 @@ public class ControlGrupo {
             pst.setInt(2, dts.getSemestre());
 
             int n = pst.executeUpdate();
-//            JOptionPane.showMessageDialog(null, "Los datos del grupo han sido actualizados");
+           
 
             if (n != 0) {
                 return true;
             } else {
                 return false;
             }
-
+//HU01 Debo ver si Numero de salón existe
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ya existe el grupo");
 
@@ -153,8 +150,6 @@ public class ControlGrupo {
       public int consultarGrupoTieneHorario(int grupo) throws SQLException {
         int cadena = 0;
 
-//        sSQL = "select * from grupo where NumGrupo like '%" + buscar + "%' order by NumGrupo";
-//        sSQL = "select NumGrupo from horario, grupo where horario.NumeroGrupo and grupo.NumGrupo like '%" + grupo + "%';";
    sSQL = "select NumeroGrupo  from horario where NumeroGrupo like '%" + grupo + "%';";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sSQL);

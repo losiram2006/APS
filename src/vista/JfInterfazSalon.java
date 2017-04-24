@@ -24,7 +24,7 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
      */
     
     EntidadSalon modelSalon=new EntidadSalon();
-    ControlSalon controlSalon1=new ControlSalon();
+    ControlSalon controlSalon=new ControlSalon();
     int salon=0;
     String imagen="";
     
@@ -76,7 +76,7 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
     void mostrar(String buscar){
         try {
         
-            Modelo1=controlSalon1.consultarSalon(buscar);
+            Modelo1=controlSalon.consultarSalon(buscar);
             tbSalon.setModel(Modelo1);
             
 
@@ -396,16 +396,17 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
         
         
         String boton=btnRegistrar.getText();
-        
-        if(Salon.equalsIgnoreCase("")){
-            JOptionPane.showMessageDialog(null, "Ingrese Numero de Salon");
+//        HU01 Debe validar campos vacíos
+         if(Salon.equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(null, "Ingrese nombre o número de Salon");
         }
         else{
             int numSalon=Integer.parseInt(Salon);
             
             if(boton.equalsIgnoreCase("Registrar")){
                 modelSalon.setNumeroSalon(numSalon);
-                controlSalon1.RegistrarSalon(modelSalon);
+//               HU01 Debo registrar un salón
+                controlSalon.RegistrarSalon(modelSalon);
                 mostrar("");
                 inhabilitar();
             }
@@ -415,7 +416,8 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
                 int salonEncontrado = 0;
             
                 try {
-                    salonEncontrado = controlSalon1.consultarSalonTieneHorario(salon);
+//                  HU02  Debe  validar si el salón tiene un horario  asignado  antes de modificar
+                    salonEncontrado = controlSalon.consultarSalonTieneHorario(salon);
                 } catch (SQLException ex) {
                     Logger.getLogger(JfInterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -423,7 +425,9 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
                 if (salonEncontrado == salon) {
                     JOptionPane.showMessageDialog(rootPane, "EL SALON " + salonEncontrado + " NO SE PUEDE MODIFICAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }else {
-                controlSalon1.modificarSalon(modelSalon,salon);
+                    
+//                 HU02 Debo poder modificar un salón existente
+                controlSalon.modificarSalon(modelSalon,salon);
                 salon=0;
                 mostrar("");
                 inhabilitar();
@@ -436,7 +440,7 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRegistrarMouseClicked
 
     private void tbSalonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSalonMouseClicked
-        // TODO add your handling code here:
+      
         habilitar();
         
         int fila=tbSalon.rowAtPoint(evt.getPoint());
@@ -444,7 +448,7 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
 
         txtNumeroSalon.setText(tbSalon.getValueAt(fila, 0).toString());
         salon=Integer.parseInt(txtNumeroSalon.getText());
-//        JOptionPane.showMessageDialog(null, "Salon es: "+salon);
+
         
     }//GEN-LAST:event_tbSalonMouseClicked
 
@@ -454,7 +458,7 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:
+     
         String numEliminar=txtNumeroSalon.getText();
         int numEli=Integer.parseInt(numEliminar);
         
@@ -465,7 +469,8 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
          int salonEncontrado = 0;
             
                 try {
-                    salonEncontrado = controlSalon1.consultarSalonTieneHorario(salon);
+//                    HU03 Debe validar si  tiene un horario  asignado antes de eliminar
+                    salonEncontrado = controlSalon.consultarSalonTieneHorario(salon);
                 } catch (SQLException ex) {
                     Logger.getLogger(JfInterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -473,7 +478,8 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
                 if (salonEncontrado == salon) {
                     JOptionPane.showMessageDialog(rootPane, "EL SALON " + salonEncontrado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }else {
-        controlSalon1.eliminarSalon(modelSalon);
+//                HU03 Debe poder eliminar un salón
+        controlSalon.eliminarSalon(modelSalon);
         mostrar("");
         inhabilitar();
         
@@ -488,7 +494,7 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void txtNumeroSalonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroSalonKeyTyped
-        // TODO add your handling code here:
+//         HU01 Ingreso letras  en campo salón
         char k= evt.getKeyChar();
         if(Character.isLetter(k)){
             getToolkit().beep();
@@ -499,14 +505,14 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
 
     private void btnBuscarSalonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarSalonMouseClicked
         // TODO add your handling code here:
-        String sal;
-        String nomma;
-        String sma;
-        String canth;
-        String mensaj[]=null;
+//        String sal;
+//        String nomma;
+//        String sma;
+//        String canth;
+//        String mensaj[]=null;
         String seleccionHoras="";
         try {
-            // TODO add your handling code here:
+         
             String buscar=txtBuscarSalon.getText();
             if(buscar.equalsIgnoreCase("")){
                 JOptionPane.showMessageDialog(null,"Campo vacio ingrese numero de Grupo a Buscar","Inane warning",JOptionPane.WARNING_MESSAGE);
@@ -514,8 +520,8 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
             }else{
                 mostrar(buscar);
                 String mensaje="";
-            
-                mensaje = controlSalon1.consultarSalonEspecifico(buscar);
+//            HU01 Debo consultar al menos un numero de  salon
+                mensaje = controlSalon.consultarSalonEspecifico(buscar);
                 if(mensaje.equalsIgnoreCase("")){
                     JOptionPane.showMessageDialog(null,"El grupo no se encuentra registrado","Inane warning",JOptionPane.WARNING_MESSAGE);
                     txtBuscarSalon.setText("");
