@@ -22,7 +22,8 @@ public class ControlGrupo {
     private Conexion mysql = new Conexion();
     private Connection cn = mysql.conectar();
     private String sSQL = "";
-
+    
+   //       HU04 Como subdirector quiero poder dar de Alta el GRUPO
     public boolean registrarGrupo(EntidadGrupo dts) {
         sSQL = "insert into grupo (NumGrupo,Semestre)" + "values (?,?)";
 
@@ -39,7 +40,7 @@ public class ControlGrupo {
             } else {
                 return false;
             }
-//HU01 Debo ver si Numero de salón existe
+//HU04 Debo ver si Numero de GRUPO existe
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ya existe el grupo");
 
@@ -76,7 +77,7 @@ public class ControlGrupo {
         }
 
     }
-
+//            HU06  Debe poder eliminar un grupo
     public boolean eliminarGrupo(EntidadGrupo dts) {
         sSQL = "delete from grupo where NumGrupo=?";
         try {
@@ -97,12 +98,13 @@ public class ControlGrupo {
         }
 
     }
-
+//               HU05  Debo poder modificar un grupo existente
     public boolean modificarGrupo(EntidadGrupo dts, int buscar) {
-        sSQL = "update grupo set NumGrupo=? where NumGrupo like '%" + buscar + "%'";
+        sSQL = "update grupo set NumGrupo=?, Semestre=? where NumGrupo like '%" + buscar + "%'";
         try {
             PreparedStatement pst = cn.prepareStatement(sSQL);
             pst.setInt(1, dts.getNumeroGrupo());
+            pst.setInt(2, dts.getSemestre());
 
             int n = pst.executeUpdate();
 
@@ -120,7 +122,7 @@ public class ControlGrupo {
         }
 
     }
-
+     //HU04 Debo  consultar al menos un grupo
     public String consultarGrupoEspecifico(String buscar) throws SQLException {
         String cadena = "";
 
@@ -145,17 +147,17 @@ public class ControlGrupo {
 
     }
 
-    /*Metodo que extrae el grupo  asignado al horario */
+//               HU06 Debe validar si  tiene un horario  asignado antes de eliminar
     
       public int consultarGrupoTieneHorario(int grupo) throws SQLException {
         int cadena = 0;
 
-   sSQL = "select NumeroGrupo  from horario where NumeroGrupo like '%" + grupo + "%';";
+   sSQL = "select NumGrupo  from horario where NumGrupo like '%" + grupo + "%';";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sSQL);
 
             while (rs.next()) {
-                int numSalon = rs.getInt("NumeroGrupo");
+                int numSalon = rs.getInt("NumGrupo");
 
                 cadena = cadena + numSalon;
             }
