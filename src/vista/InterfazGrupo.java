@@ -13,23 +13,17 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author julve
- */
-public class JfInterfazGrupo extends javax.swing.JInternalFrame {
+public class InterfazGrupo extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form JfInterfazGrupo
-     */
     EntidadGrupo modelGrupo = new EntidadGrupo();
     ControlGrupo controlGrupo = new ControlGrupo();
     int grupo = 0;
+
     String imagen = "";
 
     DefaultTableModel Modelo1;
 
-    public JfInterfazGrupo() {
+    public InterfazGrupo() {
         this.setLocation(380, 20);
         this.setTitle("Control de Grupo");
         initComponents();
@@ -48,8 +42,10 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
         txtNumeroGrupo.setText("");
         txtNumeroGrupo.setEnabled(true);
         btnRegistrar.setText("Registrar");
+        cbxSemestre.setSelectedIndex(0);
 
     }
+//    HABILITA BOTONES
 
     void habilitar() {
 
@@ -58,8 +54,6 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
         btnRegistrar.setEnabled(false);
         txtNumeroGrupo.setEnabled(false);
         btnRegistrar.setText("Registrar");
-//        btnRegistrar.setSize(100, 65);
-
     }
 
     void habilitarModificar() {
@@ -67,16 +61,18 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
         btnEliminar.setEnabled(false);
         btnRegistrar.setEnabled(true);
         txtNumeroGrupo.setEnabled(true);
-//        btnRegistrar.setSize(110, 65);
+
         btnRegistrar.setText("Guardar Cambios");
 
     }
+//                MUESTRA EN LA TABLA
 
     void mostrar(String buscar) {
         try {
-
+//METODO  QUE MUESTRA LOS  DATOS  EN  LA TABLA
             Modelo1 = controlGrupo.ConsultarGrupo(buscar);
             tbGrupo.setModel(Modelo1);
+            tbGrupo.getColumnModel().getColumn(0).setPreferredWidth(120);
 
         } catch (SQLException ex) {
             Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,7 +80,6 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
 
     }
 
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -122,7 +117,12 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
         });
 
         cbxSemestre.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
-        cbxSemestre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6" }));
+        cbxSemestre.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona", "1", "2", "3", "4", "5", "6" }));
+        cbxSemestre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxSemestreActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Semestre: ");
@@ -139,7 +139,7 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(cbxSemestre, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cbxSemestre, 0, 124, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -237,7 +237,7 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                .addComponent(btnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -286,24 +286,24 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
 
         tbGrupo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Numero de Grupo"
+                "Numero de Grupo", "Semestre"
             }
         ));
         tbGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -319,8 +319,7 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,12 +338,12 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(txtGrupoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtGrupoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscar)))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -368,10 +367,11 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 554, Short.MAX_VALUE))
-                .addContainerGap(11, Short.MAX_VALUE))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,7 +382,7 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -404,39 +404,41 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
         habilitar();
 
         int fila = tbGrupo.rowAtPoint(evt.getPoint());
+        if (fila >= 0) {
+//MUESTRA GRUPO EN LA TABLA
+            txtNumeroGrupo.setText(tbGrupo.getValueAt(fila, 0).toString());
+            grupo = Integer.parseInt(txtNumeroGrupo.getText());
+            //MUESTRA   SEMESTRE EN  LA  TABLA
+            cbxSemestre.setSelectedItem(tbGrupo.getValueAt(fila, 1).toString());
 
-        txtNumeroGrupo.setText(tbGrupo.getValueAt(fila, 0).toString());
-        grupo = Integer.parseInt(txtNumeroGrupo.getText());
-        
+        } else {
+            JOptionPane.showMessageDialog(null, "no seleciono fila");
+        }
     }//GEN-LAST:event_tbGrupoMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-        // TODO add your handling code here:
-
-//        String sal;
-//        String nomma;
-//        String sma;
-//        String canth;
-//        String mensaj[] = null;
-        String seleccionHoras = "";
+       
         try {
-            
+
             String buscar = txtGrupoBuscar.getText();
-            
+            //VALIDA   CAMPO  VACÍO
             if (buscar.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "Campo vacío ingrese numero de Grupo a Buscar", "Inane warning", JOptionPane.WARNING_MESSAGE);
 
             } else {
+//                MUESTRA DATOS  EN LA TABLA
                 mostrar(buscar);
                 String mensaje = "";
-                
-        //HU04 Debo  consultar al menos un grupo
+
+                //CONSULTA UN  GRUPO  ESPECÍFICO
                 mensaje = controlGrupo.consultarGrupoEspecifico(buscar);
                 if (mensaje.equalsIgnoreCase("")) {
                     JOptionPane.showMessageDialog(null, "El grupo no se encuentra registrado", "Inane warning", JOptionPane.WARNING_MESSAGE);
                     txtGrupoBuscar.setText("");
+                    //   MUESTRA DATOS  EN LA TABLA
                     mostrar("");
                 } else {
+//                    HABILITA BOTONES
                     habilitar();
                     txtNumeroGrupo.setText(mensaje);
                     txtGrupoBuscar.setText("");
@@ -451,85 +453,85 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
 
     private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
 
+        String boton = btnRegistrar.getText();
         String Grupo = txtNumeroGrupo.getText();
         int numGrupo = Integer.parseInt(Grupo);
-        int seleccionado = cbxSemestre.getSelectedIndex();
-        String semestreseleccion = (String) cbxSemestre.getItemAt(seleccionado);
-        
-        int semestre = Integer.parseInt(semestreseleccion);
-        String boton = btnRegistrar.getText();
+        int semestre = cbxSemestre.getSelectedIndex();
 
         if (boton.equalsIgnoreCase("Registrar")) {
-//            HU04 Debe validar campos vacíos
-            if (Grupo.equalsIgnoreCase("")) {
+//           valida campos vacío
+            if (txtNumeroGrupo.getText().equals("")) {
 
                 JOptionPane.showMessageDialog(null, "Campo Vacío Ingreso numero de grupo.", "Inane warning", JOptionPane.WARNING_MESSAGE);
-//            HU04 Debe  validar  campo  no  seleccionado
-            } 
-            if (seleccionado == 0){
-                JOptionPane.showMessageDialog(null, "Campo no seleccionado Seleccione un semestre.", "Inane warning", JOptionPane.WARNING_MESSAGE);
+//           validar  campo  no  seleccionado
             }
-                    else {
+            if (cbxSemestre.getSelectedIndex() == 0) {
+                JOptionPane.showConfirmDialog(null, "Debes seleccionar Semestre");
 
-               
+            } else {
+                //AGREGA A MODELO LOS   DATOS
                 modelGrupo.setNumeroGrupo(numGrupo);
+//                System.out.println("numGrupo" + numGrupo);
                 modelGrupo.setSemestre(semestre);
-          //    HU04 Como subdirector quiero poder dar de Alta el GRUPO
+
+                //   MÉTODO QUE REGISTRA UN GRUPO
                 controlGrupo.registrarGrupo(modelGrupo);
+//                MUESTRA DATOS EN LA TABLA
                 mostrar("");
+//                HABILITA BOTONES
                 inhabilitar();
 
             }
 
         }
+
         if (boton.equalsIgnoreCase("Guardar cambios")) {
-            //  HU05 Debe validar campos vacíos
-         if (Grupo.equalsIgnoreCase("")) {
-
+//           VALIDA CAMPO VACÍO
+            if (txtNumeroGrupo.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Campo Vacío Ingreso numero de grupo.", "Inane warning", JOptionPane.WARNING_MESSAGE);
-//            HU05 Debe  validar  campo  no  seleccionado
-            } 
-            if (seleccionado == 0){
-                JOptionPane.showMessageDialog(null, "Campo no seleccionado Seleccione un semestre.", "Inane warning", JOptionPane.WARNING_MESSAGE);
             }
-//                int numGrupo = Integer.parseInt(Grupo);
+//            VALIDA CAMPO  SELECCIONADO
+            if (cbxSemestre.getSelectedIndex() == 0) {
+                JOptionPane.showConfirmDialog(null, "Debes seleccionar Semestre");
 
-              
+            } else {
+
                 int grupoEncontrado = 0;
-                System.out.println("grupoEncontrado " + grupoEncontrado );
-            try {
-                //  HU05  Debe validar  si el  grupo tiene un horario asignado antes  de modificar
-                grupoEncontrado = controlGrupo.consultarGrupoTieneHorario(grupo);
-            } catch (SQLException ex) {
-                Logger.getLogger(JfInterfazGrupo.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            System.out.println("grupoEncontrado " + grupoEncontrado);
+                try {
+//                MÉTODO QUE  VALIDA SI EL  GRUPO TIENE  UN GRUPO ASIGNADO PARA NO MODIFICARLO
+                    grupoEncontrado = controlGrupo.consultarGrupoTieneHorario(grupo);
+                } catch (SQLException ex) {
+                    Logger.getLogger(InterfazGrupo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
                 if (grupoEncontrado == grupo) {
                     JOptionPane.showMessageDialog(rootPane, "EL GRUPO " + grupoEncontrado + " NO SE PUEDE MODIFICAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }else {
-                     modelGrupo.setNumeroGrupo(numGrupo);
-                     modelGrupo.setSemestre(semestre);
-//               HU05  Debo poder modificar un grupo existente
-                    System.out.println("grupo" + grupo);
-                    System.out.println("numGrupo" + numGrupo);
-                    System.out.println("semestre" + semestre);
-//               HU05     Debo poder modificar un grupo existente
-                controlGrupo.modificarGrupo(modelGrupo, grupo);
-                grupo = 0;
-                mostrar("");
-                inhabilitar();
-          
+                } else {
+//          ASIGNA LOS  DATOS AL MODELO
+                    modelGrupo.setNumeroGrupo(numGrupo);
+                    modelGrupo.setSemestre(semestre);
 
+//           MÉTODO QUE MODIFICA EL  GRUPO
+                    controlGrupo.modificarGrupo(modelGrupo, grupo);
+                    grupo = 0;
+//                    MUESTRA  LOS DATOS  EN LA TABLA
+                    mostrar("");
+//                    HABILITA LOS BOTONES
+                    inhabilitar();
+
+                }
+            }
         }
-  }    
     }//GEN-LAST:event_btnRegistrarMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        // TODO add your handling code here:
+       
         habilitarModificar();
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:
+        
         String numEliminar = txtNumeroGrupo.getText();
         int numEli = Integer.parseInt(numEliminar);
 
@@ -537,38 +539,41 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
 
         if (confirmacion == 0) {
             modelGrupo.setNumeroGrupo(numEli);
-            
+
             int grupoEncontrado = 0;
             try {
-//               HU06 Debe validar si  tiene un horario  asignado antes de eliminar
+//   MÉTODO QUE VALIDA SI EL  GRUPO TIENE  UN HORARIO ASIGNADO PARA NO MODIFICARLO O ELIMINARLO
                 grupoEncontrado = controlGrupo.consultarGrupoTieneHorario(grupo);
             } catch (SQLException ex) {
-                Logger.getLogger(JfInterfazGrupo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(InterfazGrupo.class.getName()).log(Level.SEVERE, null, ex);
             }
-                if (grupoEncontrado == grupo) {
-                    JOptionPane.showMessageDialog(rootPane, "EL GRUPO " + grupoEncontrado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }else {
-//                  HU06  Debe poder eliminar un grupo
-            controlGrupo.eliminarGrupo(modelGrupo);
-            mostrar("");
-            inhabilitar();
+            if (grupoEncontrado == grupo) {
+                JOptionPane.showMessageDialog(rootPane, "EL GRUPO " + grupoEncontrado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+//   MÉTODO PARA ELIMINAR UN GRUPO
+                controlGrupo.eliminarGrupo(modelGrupo);
+//                MUESTRA DATOS  EN LA TABLA
+                mostrar("");
+//                HABILITA  BOTONES 
+                inhabilitar();
 
-        }}
+            }
+        }
 
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-        // TODO add your handling code here:
+       
         inhabilitar();
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        // TODO add your handling code here:
+       
         this.setVisible(false);
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void txtNumeroGrupoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroGrupoKeyTyped
-        // HU04 Debe  validar ingreso de letras al campo numero de grupo
+        //validar ingreso de letras al campo numero de grupo
         char k = evt.getKeyChar();
         if (Character.isLetter(k)) {
             getToolkit().beep();
@@ -578,7 +583,7 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtNumeroGrupoKeyTyped
 
     private void txtGrupoBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGrupoBuscarKeyTyped
-        // HU04 Debe  validar ingreso de letras al campo numero de grupo
+        // validar ingreso de letras al campo numero de grupo
         char k = evt.getKeyChar();
         if (Character.isLetter(k)) {
             getToolkit().beep();
@@ -595,6 +600,11 @@ public class JfInterfazGrupo extends javax.swing.JInternalFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void cbxSemestreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSemestreActionPerformed
+        // TODO add your handling code here:
+        cbxSemestre.requestFocus();
+    }//GEN-LAST:event_cbxSemestreActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

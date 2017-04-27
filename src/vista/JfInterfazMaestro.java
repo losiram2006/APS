@@ -29,7 +29,7 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
     /**
      * Creates new form CaMaestros
      */
-    EntidadMaestro modelMaestro1=new EntidadMaestro();
+    EntidadMaestro modelMaestro=new EntidadMaestro();
     EntidadHorasAsignacion entidadHoras=new EntidadHorasAsignacion();
     ControlMaestro controlMaestro1=new ControlMaestro();
     ControlHorasAsignacion controlHoras=new ControlHorasAsignacion();
@@ -575,7 +575,7 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
-        // TODO add your handling code here:
+       
         
         ImageIcon icon=new ImageIcon(imagen);      
         String horas="(Ninguno)";
@@ -618,26 +618,27 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
                                     JOptionPane.showMessageDialog(null, "Ingrese las Horas Asignadas");
                                     }
                                     else{
-                                        if(horaAsignada.equalsIgnoreCase("Jornada 20 HRS")){
-                                            hora=20;
-                                        }
-                                        if(horaAsignada.equalsIgnoreCase("Jornada 30 HRS")){
-                                            hora=30;
-                                        }
-                                        if(horaAsignada.equalsIgnoreCase("Jornada 40 HRS")){
-                                            hora=40;
-                                        }
-                                    
+//                                        if(horaAsignada.equalsIgnoreCase("Jornada 20 HRS")){
+//                                            hora=20;
+//                                        }
+//                                        if(horaAsignada.equalsIgnoreCase("Jornada 30 HRS")){
+//                                            hora=30;
+//                                        }
+//                                        if(horaAsignada.equalsIgnoreCase("Jornada 40 HRS")){
+//                                            hora=40;
+//                                        }
+//                                    
                                         JOptionPane.showMessageDialog(null, "Se seleccino "+hora);
                                         if(cadena.equalsIgnoreCase("Registrar")){
                                         
-                                            modelMaestro1.setNumeroEmpleado(numeroEmpleado);
-                                            modelMaestro1.setNombre(nombre);
-                                            modelMaestro1.setApePaterno(apellidoPaterno);
-                                            modelMaestro1.setApeMaterno(apellidoMaterno);
-//                                            modelMaestro1.setFechaIngreso(fecha);
-                                            modelMaestro1.setHorasAsignadas(hora);
-                                            controlMaestro1.registrarMaestro(modelMaestro1);
+                                            modelMaestro.setNumeroEmpleado(numeroEmpleado);
+                                            modelMaestro.setNombre(nombre);
+                                            modelMaestro.setApePaterno(apellidoPaterno);
+                                            modelMaestro.setApeMaterno(apellidoMaterno);
+                                            modelMaestro.setHorasAsignadas(hora);
+                                            
+//                                           HU07 Debe permitir  hacer registros nuevos
+                                            controlMaestro1.registrarMaestro(modelMaestro);
                                             
                                             // guarda la cantidad de horas para disponibilidad del maestro
                                             entidadHoras.setHoras(hora);
@@ -651,14 +652,15 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
                                             hora=0;
                                         }
                                         if(cadena.equalsIgnoreCase("Guardar cambios")){
-                                            modelMaestro1.setNumeroEmpleado(numeroEmpleado);
-                                            modelMaestro1.setNombre(nombre);
-                                            modelMaestro1.setApePaterno(apellidoPaterno);
-                                            modelMaestro1.setApeMaterno(apellidoMaterno);
-//                                            modelMaestro1.setFechaIngreso(fecha);
-                                            modelMaestro1.setHorasAsignadas(hora);
-                                            controlMaestro1.modificarMaestro(modelMaestro1);
+                                            modelMaestro.setNumeroEmpleado(numeroEmpleado);
+                                            modelMaestro.setNombre(nombre);
+                                            modelMaestro.setApePaterno(apellidoPaterno);
+                                            modelMaestro.setApeMaterno(apellidoMaterno);
+
+                                            modelMaestro.setHorasAsignadas(hora);
+                                            controlMaestro1.modificarMaestro(modelMaestro);
 //                                          materia=0;
+//     HU07 se debe vizualizar    la información de registros nuevos  y los  existentes
                                             mostrarGeneralTabla();
                                             inhabilitar();
                                         }
@@ -683,15 +685,15 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
                                             hora=40;
                                         }
             
-            modelMaestro1.setNumeroEmpleado(numeroEmpleado);
-            modelMaestro1.setNombre(nombre);
-            modelMaestro1.setApePaterno(apellidoPaterno);
-            modelMaestro1.setApeMaterno(apellidoMaterno);
-            modelMaestro1.setHorasAsignadas(hora);
+            modelMaestro.setNumeroEmpleado(numeroEmpleado);
+            modelMaestro.setNombre(nombre);
+            modelMaestro.setApePaterno(apellidoPaterno);
+            modelMaestro.setApeMaterno(apellidoMaterno);
+            modelMaestro.setHorasAsignadas(hora);
 //            modelMaestro1.setFechaIngreso(fecha);
             
             
-            controlMaestro1.modificarMaestro(modelMaestro1);
+            controlMaestro1.modificarMaestro(modelMaestro);
             mostrarGeneralTabla();
             inhabilitar();
             
@@ -849,8 +851,8 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
          int confirmacion =JOptionPane.showConfirmDialog(null,"Seguro deseas eliminar","Inane warning",JOptionPane.YES_NO_OPTION);
 
         if(confirmacion==0){
-            modelMaestro1.setNumeroEmpleado(empleado);
-            controlMaestro1.eliminarMaestro(modelMaestro1);
+            modelMaestro.setNumeroEmpleado(empleado);
+            controlMaestro1.eliminarMaestro(modelMaestro);
             mostrarGeneralTabla();
             inhabilitar();
             
@@ -859,7 +861,7 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void txtNumeroEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroEmpleadoKeyTyped
-        // TODO add your handling code here:
+//     HU07 Debe validar ingreso de letras y números en los  campos numero empleado
         char k= evt.getKeyChar();
         if(Character.isLetter(k)){
             getToolkit().beep();

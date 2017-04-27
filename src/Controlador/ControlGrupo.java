@@ -23,7 +23,7 @@ public class ControlGrupo {
     private Connection cn = mysql.conectar();
     private String sSQL = "";
     
-   //       HU04 Como subdirector quiero poder dar de Alta el GRUPO
+   //  PBI2:HU04:  MÉTODO QUE REGISTRA UN GRUPO
     public boolean registrarGrupo(EntidadGrupo dts) {
         sSQL = "insert into grupo (NumGrupo,Semestre)" + "values (?,?)";
 
@@ -40,20 +40,20 @@ public class ControlGrupo {
             } else {
                 return false;
             }
-//HU04 Debo ver si Numero de GRUPO existe
+//VALIDA SI UN Numero de GRUPO existe
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ya existe el grupo");
 
             return false;
         }
     }
-
+//MÉTODO  QUE MUESTRA LOS  DATOS  EN  LA TABLA
     public DefaultTableModel ConsultarGrupo(String buscar) throws SQLException {
         DefaultTableModel modelo;
 
-        String[] titulos = {"Numero de Grupo"};
+        String[] titulos = {"Numero de Grupo", "Semestre"};
 
-        String[] Grupos = new String[1];
+        String[] Grupos = new String[2];
 
         modelo = new DefaultTableModel(null, titulos);
 
@@ -65,19 +65,20 @@ public class ControlGrupo {
 
             while (rs.next()) {
                 Grupos[0] = rs.getString("NumGrupo");
-
+                Grupos[1] = rs.getString("Semestre");
                 modelo.addRow(Grupos);
 
             }
             return modelo;
 
         } catch (Exception e) {
-            JOptionPane.showConfirmDialog(null, "El numero de grupo no exite");
-            return null;
-        }
+            
+            JOptionPane.showConfirmDialog(null, "El numero de grupo no exite" + modelo);
+            
+        }return null;
 
     }
-//            HU06  Debe poder eliminar un grupo
+//  PBI2:HU06  MÉTODO PARA ELIMINAR UN GRUPO
     public boolean eliminarGrupo(EntidadGrupo dts) {
         sSQL = "delete from grupo where NumGrupo=?";
         try {
@@ -98,7 +99,7 @@ public class ControlGrupo {
         }
 
     }
-//               HU05  Debo poder modificar un grupo existente
+//   PBI2:HU05:  MÉTODO QUE MODIFICA UN GRUPO
     public boolean modificarGrupo(EntidadGrupo dts, int buscar) {
         sSQL = "update grupo set NumGrupo=?, Semestre=? where NumGrupo like '%" + buscar + "%'";
         try {
@@ -122,7 +123,7 @@ public class ControlGrupo {
         }
 
     }
-     //HU04 Debo  consultar al menos un grupo
+    //METODO QUE CONSULTA UN  GRUPO  ESPECÍFICO
     public String consultarGrupoEspecifico(String buscar) throws SQLException {
         String cadena = "";
 
@@ -147,9 +148,8 @@ public class ControlGrupo {
 
     }
 
-//               HU06 Debe validar si  tiene un horario  asignado antes de eliminar
-    
-      public int consultarGrupoTieneHorario(int grupo) throws SQLException {
+//   MÉTODO QUE VALIDA SI EL  GRUPO TIENE  UN HORARIO  ASIGNADO PARA NO MODIFICARLO O ELIMINARLO
+        public int consultarGrupoTieneHorario(int grupo) throws SQLException {
         int cadena = 0;
 
    sSQL = "select NumGrupo  from horario where NumGrupo like '%" + grupo + "%';";

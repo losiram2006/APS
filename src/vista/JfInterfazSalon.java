@@ -416,7 +416,7 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
                 int salonEncontrado = 0;
             
                 try {
-//                  HU02  Debe  validar si el salón tiene un horario  asignado  antes de modificar
+//                  HU01  Debe  validar si el salón tiene un horario  asignado  antes de modificar
                     salonEncontrado = controlSalon.consultarSalonTieneHorario(salon);
                 } catch (SQLException ex) {
                     Logger.getLogger(JfInterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
@@ -426,7 +426,7 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(rootPane, "EL SALON " + salonEncontrado + " NO SE PUEDE MODIFICAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }else {
                     
-//                 HU02 Debo poder modificar un salón existente
+//                 HU01 Debo poder modificar un salón existente
                 controlSalon.modificarSalon(modelSalon,salon);
                 salon=0;
                 mostrar("");
