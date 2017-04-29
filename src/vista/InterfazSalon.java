@@ -17,29 +17,28 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author julve
  */
-public class JfInterfazSalon extends javax.swing.JInternalFrame {
+public class InterfazSalon extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form InterfazSalon1
      */
-    
-    EntidadSalon modelSalon=new EntidadSalon();
-    ControlSalon controlSalon=new ControlSalon();
-    int salon=0;
-    String imagen="";
-    
+    EntidadSalon modelSalon = new EntidadSalon();
+    ControlSalon controlSalon = new ControlSalon();
+    String salon = "";
+    String imagen = "";
+
     DefaultTableModel Modelo1;
-    
-    public JfInterfazSalon() {
-        this.setLocation(380,20);
+
+    public InterfazSalon() {
+        this.setLocation(380, 20);
         this.setTitle("Control de Salon");
         initComponents();
-        mostrar("");
+        mostrar();
         inhabilitar();
     }
-    
-    void inhabilitar(){
-        
+
+    void inhabilitar() {
+
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnRegistrar.setEnabled(true);
@@ -48,43 +47,41 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
         txtNumeroSalon.setText("");
         txtNumeroSalon.setEnabled(true);
         btnRegistrar.setText("Registrar");
-     
+
     }
-    
-    void habilitar(){
-        
+
+    void habilitar() {
+
         btnModificar.setEnabled(true);
         btnEliminar.setEnabled(true);
         btnRegistrar.setEnabled(false);
         txtNumeroSalon.setEnabled(false);
         btnRegistrar.setText("Registrar");
-        
+
     }
-    
-    void habilitarModificar(){
+
+    void habilitarModificar() {
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnRegistrar.setEnabled(true);
         txtNumeroSalon.setEnabled(true);
         btnRegistrar.setText("Guardar Cambios");
-        
 
     }
-    
-   
-    
-    void mostrar(String buscar){
-        try {
-        
-            Modelo1=controlSalon.consultarSalon(buscar);
-            tbSalon.setModel(Modelo1);
-            
 
-        
+//    MUESTRA  DATOS  EN LA TABLA
+    void mostrar() {
+        try {
+
+            Modelo1 = controlSalon.consultarSalon();
+            tbSalon.setModel(Modelo1);
+//            oculta  culumna en tabla
+            tbSalon.getColumnModel().getColumn(0).setMaxWidth(0);
+
         } catch (SQLException ex) {
             Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -166,20 +163,20 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
 
         tbSalon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null},
-                {null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Numero Salon"
+
             }
         ));
         tbSalon.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -195,8 +192,8 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,9 +224,9 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
                         .addComponent(txtBuscarSalon, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBuscarSalon)))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,65 +388,93 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
-        // TODO add your handling code here:
-        String Salon=txtNumeroSalon.getText();
-        
-        
-        String boton=btnRegistrar.getText();
-//        HU01 Debe validar campos vacíos
-         if(Salon.equalsIgnoreCase("")){
-            JOptionPane.showMessageDialog(null, "Ingrese nombre o número de Salon");
-        }
-        else{
-            int numSalon=Integer.parseInt(Salon);
-            
-            if(boton.equalsIgnoreCase("Registrar")){
-                modelSalon.setNumeroSalon(numSalon);
-//               HU01 Debo registrar un salón
-                controlSalon.RegistrarSalon(modelSalon);
-                mostrar("");
-                inhabilitar();
-            }
-            if(boton.equalsIgnoreCase("Guardar cambios")){
-                modelSalon.setNumeroSalon(salon);
-                
-                int salonEncontrado = 0;
-            
-                try {
-//                  HU01  Debe  validar si el salón tiene un horario  asignado  antes de modificar
-                    salonEncontrado = controlSalon.consultarSalonTieneHorario(salon);
-                } catch (SQLException ex) {
-                    Logger.getLogger(JfInterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
-                if (salonEncontrado == salon) {
-                    JOptionPane.showMessageDialog(rootPane, "EL SALON " + salonEncontrado + " NO SE PUEDE MODIFICAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }else {
-                    
-//                 HU01 Debo poder modificar un salón existente
-                controlSalon.modificarSalon(modelSalon,salon);
-                salon=0;
-                mostrar("");
-                inhabilitar();
-                
-            }
-        }}
 
-        
-        
+        String boton = btnRegistrar.getText();
+        String salonModificar = txtNumeroSalon.getText();
+
+        if (boton.equalsIgnoreCase("Registrar")) {
+//        PBI1:HU01:03:valida campo vacío
+            if (txtNumeroSalon.getText().equals("")) {
+
+                JOptionPane.showMessageDialog(null, "Campo Vacío Ingreso número  o nombre de salon.", "Inane warning", JOptionPane.WARNING_MESSAGE);
+
+            } else {
+                //AGREGA A MODELO LOS   DATOS
+                modelSalon.setNumeroSalon(salonModificar);
+                System.out.println("salon" + salonModificar);
+
+                //   PBI1:HU01:01: MÉTODO QUE REGISTRA UN SALON
+                controlSalon.RegistrarSalon(modelSalon);
+//                MUESTRA DATOS EN LA TABLA
+                mostrar();
+//                HABILITA BOTONES
+                inhabilitar();
+
+            }
+
+        }
+
+        if (boton.equalsIgnoreCase("Guardar cambios")) {
+            int fila = tbSalon.getSelectedRow();
+            String idSalon = tbSalon.getValueAt(fila, 0).toString();
+            String salonExiste=tbSalon.getValueAt(fila, 1).toString();
+ //   PBI1:HU02:03: MÉTODO QUE REGISTRA UN SALON VALIDA CAMPO VACÍO
+            if (txtNumeroSalon.getText().equals("")) {
+
+                JOptionPane.showMessageDialog(null, "Campo Vacío Ingreso numero de grupo.", "Inane warning", JOptionPane.WARNING_MESSAGE);
+            } else {
+
+                String salonEncontrado = "";
+//                System.out.println("salonEncontrado " + salonEncontrado);
+                try {
+
+////          //   PBI1:HU02:01: MÉTODO QUE  VALIDA SI EL  SALON TIENE  UN HORARIO ASIGNADO PARA NO MODIFICARLO
+                    salonEncontrado = controlSalon.consultarSalonTieneHorario(salon);
+//                     System.out.println("salonEncontrado " + salonEncontrado);
+                } catch (SQLException ex) {
+                    Logger.getLogger(InterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                if (salonEncontrado.equalsIgnoreCase(idSalon)) {
+//                    System.out.println("salon" + salonEncontrado);
+                    JOptionPane.showMessageDialog(rootPane, "EL Salon " + salonExiste + " NO SE PUEDE MODIFICAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    txtNumeroSalon.setText("");
+                } else {
+//          ASIGNA LOS  DATOS AL MODELO
+                    modelSalon.setNumeroSalon(salonModificar);
+//                    System.out.println("salon1" + salon1);
+//                     System.out.println("idSalon" + idSalon);
+
+                    try {
+                        //           MÉTODO QUE MODIFICA EL  GRUPO
+                        controlSalon.modificarSalon(idSalon, txtNumeroSalon.getText());
+                        
+                    } catch (SQLException ex) {
+                        Logger.getLogger(InterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(InterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+//                    MUESTRA  LOS DATOS  EN LA TABLA
+                    mostrar();
+//                    HABILITA LOS BOTONES
+                    inhabilitar();
+                     
+                }
+            }
+        }
+
     }//GEN-LAST:event_btnRegistrarMouseClicked
 
     private void tbSalonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSalonMouseClicked
-      
+
         habilitar();
-        
-        int fila=tbSalon.rowAtPoint(evt.getPoint());
-        
 
-        txtNumeroSalon.setText(tbSalon.getValueAt(fila, 0).toString());
-        salon=Integer.parseInt(txtNumeroSalon.getText());
+        int fila = tbSalon.rowAtPoint(evt.getPoint());
 
-        
+        txtNumeroSalon.setText(tbSalon.getValueAt(fila, 1).toString());
+
+
     }//GEN-LAST:event_tbSalonMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
@@ -458,34 +483,38 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-     
-        String numEliminar=txtNumeroSalon.getText();
-        int numEli=Integer.parseInt(numEliminar);
-        
-        JOptionPane.showMessageDialog(null, "Resultado "+numEli);
-        
-        modelSalon.setNumeroSalon(numEli);
-        
-         int salonEncontrado = 0;
-            
-                try {
-//                    HU03 Debe validar si  tiene un horario  asignado antes de eliminar
-                    salonEncontrado = controlSalon.consultarSalonTieneHorario(salon);
-                } catch (SQLException ex) {
-                    Logger.getLogger(JfInterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
-                if (salonEncontrado == salon) {
-                    JOptionPane.showMessageDialog(rootPane, "EL SALON " + salonEncontrado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }else {
-//                HU03 Debe poder eliminar un salón
-        controlSalon.eliminarSalon(modelSalon);
-        mostrar("");
-        inhabilitar();
-        
-            } 
-        
-        
+        int fila = tbSalon.getSelectedRow();
+        String idSalon = tbSalon.getValueAt(fila, 0).toString();
+        String numEliminar = txtNumeroSalon.getText();
+//        int numEli = Integer.parseInt(numEliminar);
+
+        JOptionPane.showMessageDialog(null, "Salón a eliminar:  " + numEliminar);
+
+        modelSalon.setNumeroSalon(numEliminar);
+
+        String salonEncontrado = "";
+
+        try {
+// PBI1:HU01: MÉTODO  QUE CONSULTA   SI UN SALON TIENE UN HORARIO  ASIGNADO
+            salonEncontrado = controlSalon.consultarSalonTieneHorario(salon);
+            System.out.println("salonEncontrado" + salonEncontrado);
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfazSalon.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (salonEncontrado.equalsIgnoreCase(idSalon)) {
+            JOptionPane.showMessageDialog(rootPane, "EL SALON "+numEliminar +"  NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else {
+//       PBI1:HU01: MÉTODO  QUE ELIMINA  UN SALÓN
+            controlSalon.eliminarSalon(modelSalon);
+            salon="";
+            mostrar();
+            inhabilitar();
+
+        }
+
+
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
@@ -494,72 +523,60 @@ public class JfInterfazSalon extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSalirMouseClicked
 
     private void txtNumeroSalonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroSalonKeyTyped
-//         HU01 Ingreso letras  en campo salón
-        char k= evt.getKeyChar();
-        if(Character.isLetter(k)){
-            getToolkit().beep();
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "No se puede ingresar Letras", "Error Datos", JOptionPane.ERROR_MESSAGE);
-        }
+
     }//GEN-LAST:event_txtNumeroSalonKeyTyped
 
     private void btnBuscarSalonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarSalonMouseClicked
-        // TODO add your handling code here:
-//        String sal;
-//        String nomma;
-//        String sma;
-//        String canth;
-//        String mensaj[]=null;
-        String seleccionHoras="";
+
+        String seleccionHoras = "";
         try {
-         
-            String buscar=txtBuscarSalon.getText();
-            if(buscar.equalsIgnoreCase("")){
-                JOptionPane.showMessageDialog(null,"Campo vacio ingrese numero de Grupo a Buscar","Inane warning",JOptionPane.WARNING_MESSAGE);
-                
-            }else{
-                mostrar(buscar);
-                String mensaje="";
-//            HU01 Debo consultar al menos un numero de  salon
+
+            String buscar = txtBuscarSalon.getText();
+//            Valida campo vacío
+            if (buscar.equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(null, "Campo vacio ingrese numero de Grupo a Buscar", "Inane warning", JOptionPane.WARNING_MESSAGE);
+
+            } else {
+
+                mostrar();
+                String mensaje = "";
+//    PBI1:HU01:04: MÉTODO   QUE HACE UNA CONSULTAR ESPECÍFICA
                 mensaje = controlSalon.consultarSalonEspecifico(buscar);
-                if(mensaje.equalsIgnoreCase("")){
-                    JOptionPane.showMessageDialog(null,"El grupo no se encuentra registrado","Inane warning",JOptionPane.WARNING_MESSAGE);
+                if (mensaje.equalsIgnoreCase("")) {
+                    JOptionPane.showMessageDialog(null, "El grupo no se encuentra registrado", "Inane warning", JOptionPane.WARNING_MESSAGE);
                     txtBuscarSalon.setText("");
-                mostrar("");
-                }else{
+                    mostrar();
+                } else {
                     habilitar();
                     txtNumeroSalon.setText(mensaje);
                     txtBuscarSalon.setText("");
-                    
+
                 }
-                
-                
+
             }
-            
-            
-                
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(JfInterfazMateria.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
+
+        } catch (SQLException ex) {
+            Logger.getLogger(JfInterfazMateria.class
+                    .getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnBuscarSalonMouseClicked
 
     private void txtBuscarSalonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarSalonKeyTyped
         // TODO add your handling code here:
-        char k= evt.getKeyChar();
-        if(Character.isLetter(k)){
-            getToolkit().beep();
-            evt.consume();
-            JOptionPane.showMessageDialog(null, "No se puede ingresar Letras", "Error Datos", JOptionPane.WARNING_MESSAGE);
-        }
-        else{
-            String buscar1=txtBuscarSalon.getText();
-        
-            mostrar(buscar1);
-            
-        }
-        
+//        char k= evt.getKeyChar();
+//        if(Character.isLetter(k)){
+//            getToolkit().beep();
+//            evt.consume();
+//            JOptionPane.showMessageDialog(null, "No se puede ingresar Letras", "Error Datos", JOptionPane.WARNING_MESSAGE);
+//        }
+//        else{
+        String buscar1 = txtBuscarSalon.getText();
+
+        mostrar();
+//            
+//        }
+
     }//GEN-LAST:event_txtBuscarSalonKeyTyped
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked

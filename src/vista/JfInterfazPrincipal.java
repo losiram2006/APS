@@ -20,7 +20,7 @@ public class JfInterfazPrincipal extends javax.swing.JFrame {
 
         this.setExtendedState(JfInterfazPrincipal.MAXIMIZED_BOTH);
 
-//        pnldatos.add(hora); 
+
     }
 
     @SuppressWarnings("unchecked")
@@ -388,7 +388,7 @@ public class JfInterfazPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.jdpEscritorio.removeAll();
         this.jdpEscritorio.repaint();
-        JfInterfazSalon Salon = new JfInterfazSalon();
+        InterfazSalon Salon = new InterfazSalon();
         Salon.setVisible(true);
         jdpEscritorio.add(Salon);
 //        lbImagen.setVisible(true);

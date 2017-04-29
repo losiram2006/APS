@@ -417,7 +417,7 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tbGrupoMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-       
+
         try {
 
             String buscar = txtGrupoBuscar.getText();
@@ -513,6 +513,7 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
                     modelGrupo.setSemestre(semestre);
 
 //           MÉTODO QUE MODIFICA EL  GRUPO
+                    System.out.println("grupo" + grupo);
                     controlGrupo.modificarGrupo(modelGrupo, grupo);
                     grupo = 0;
 //                    MUESTRA  LOS DATOS  EN LA TABLA
@@ -526,12 +527,12 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRegistrarMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-       
+
         habilitarModificar();
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        
+
         String numEliminar = txtNumeroGrupo.getText();
         int numEli = Integer.parseInt(numEliminar);
 
@@ -563,12 +564,12 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-       
+
         inhabilitar();
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-       
+
         this.setVisible(false);
     }//GEN-LAST:event_btnSalirMouseClicked
 
