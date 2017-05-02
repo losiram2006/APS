@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author julve
  */
-public class JfInterfazReporte extends javax.swing.JInternalFrame {
+public class InterfazReporte extends javax.swing.JInternalFrame {
 
     ControlReporte controlReporte = new ControlReporte();
     DefaultTableModel modelo1;
@@ -31,7 +31,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
     Vector claveSalon = new Vector();
     Vector idMaestro = new Vector();
 
-    public JfInterfazReporte() {
+    public InterfazReporte() {
         initComponents();
         obtenerSalon();
         obtenerGrupo();
@@ -328,7 +328,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazReporte.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfazReporte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -346,7 +346,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazReporte.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfazReporte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -364,7 +364,7 @@ public class JfInterfazReporte extends javax.swing.JInternalFrame {
                 claveSalon.add(rs.getString("NumSalon"));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazReporte.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfazReporte.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
