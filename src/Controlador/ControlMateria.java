@@ -23,7 +23,7 @@ public class ControlMateria {
     private Conexion mysql=new Conexion();
     private Connection cn=mysql.conectar();
     private String sSQL="";
-    
+    //  PBI4:HU10   MÉTODO  QUE REGISTRA LOS  DATOS DE LA MATERIA
     public boolean RegistrarMateria(EntidadMateria dts){
         sSQL="insert into materia (ClaveMateria,NombreMateria,SemestreMateria,Horas)"+
                 "values (?,?,?,?)";
@@ -45,7 +45,7 @@ public class ControlMateria {
             }
             
         }catch(Exception e){
-            JOptionPane.showConfirmDialog(null, e);
+            JOptionPane.showConfirmDialog(null, "La materia ya  esta registrada");
             
             return false;
         }
@@ -53,7 +53,7 @@ public class ControlMateria {
     
     
     
-
+//MUESTRA  LOS  DATOS  EN UNA  TABLA
     public DefaultTableModel ConsultarMateria(String buscar) throws SQLException{
         DefaultTableModel modelo;
         
@@ -86,7 +86,7 @@ public class ControlMateria {
         }
         
     }
-    
+      //MÉTODO QUE MODIFICA UNA MATERIA EXISTENTE
     public boolean modificarMateria(EntidadMateria dts,int buscar){
         sSQL="update materia set NombreMateria=?,SemestreMateria=?,Horas=? where ClaveMateria like '%"+ buscar +"%'";
         try{
@@ -112,7 +112,26 @@ public class ControlMateria {
         }
         
     }
-    
+    ///   MÉTODO QUE VALIDA SI LA MATERIA TIENE  UN HORARIO  ASIGNADO PARA NO MODIFICARLO O ELIMINARLO
+
+    public int consultarMateriaTieneHorario(int claveMateria) throws SQLException {
+        int cadena = 0;
+
+        sSQL = "select ClaveMateria from horario where ClaveMateria like  '%" + claveMateria + "%';";
+
+        Statement st = cn.createStatement();
+        ResultSet rs = st.executeQuery(sSQL);
+
+        while (rs.next()) {
+            int numero = rs.getInt("ClaveMateria");
+
+            cadena = cadena + numero;
+        }
+
+        return cadena;
+    }
+
+      //MÉTODO QUE ELIMINA UNA MATERIA EXISTENTE
     public boolean eliminarMateria(EntidadMateria dts){
         sSQL="delete from materia where ClaveMateria=?";
         try{
@@ -135,7 +154,7 @@ public class ControlMateria {
         }
         
     }
-    
+     //MÉTODO QUE  CONSULTA UNA  MATERIA ESPECÍFICA
     public String consultarMateriaEspecifico(String buscar) throws SQLException{
         String cadena="";
             
@@ -152,7 +171,7 @@ public class ControlMateria {
                 String horasmateria=rs.getString("Horas");
 
                 cadena=cadena+clav+"-"+nombmateria+"-"+semestre+"-"+horasmateria;
-
+                System.out.println("cadena: " + cadena);
             }
             return cadena;
             
@@ -183,21 +202,7 @@ public class ControlMateria {
         
     }
     
-     public int consultarMateriaTieneHorario(int materia) throws SQLException {
-        int cadena = 0;
-
-        sSQL = "select Salon_NumSalon  from horario where Salon_NumSalon like '%" + materia + "%';";
-        Statement st = cn.createStatement();
-        ResultSet rs = st.executeQuery(sSQL);
-
-        while (rs.next()) {
-            int numSalon = rs.getInt("Salon_NumSalon");
-
-            cadena = cadena + numSalon;
-        }
-
-        return cadena;
-    }
+    
     
     
 }

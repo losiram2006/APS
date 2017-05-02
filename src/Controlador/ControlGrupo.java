@@ -135,8 +135,9 @@ public class ControlGrupo {
 
             while (rs.next()) {
                 String numSalon = rs.getString("NumGrupo");
-
-                cadena = cadena + numSalon;
+                String semestre= rs.getString("Semestre");
+                cadena = cadena + numSalon + "-" + semestre;
+               
             }
 
             return cadena;

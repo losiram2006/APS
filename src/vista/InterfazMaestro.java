@@ -5,14 +5,10 @@
  */
 package vista;
 
-import Controlador.ControlHorasAsignacion;
 import Modelo.EntidadMaestro;
 import Controlador.ControlMaestro;
-import Modelo.EntidadHorasAsignacion;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-//import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,75 +20,83 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author julve
  */
-public class JfInterfazMaestro extends javax.swing.JInternalFrame {
+public class InterfazMaestro extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form CaMaestros
      */
-    EntidadMaestro modelMaestro=new EntidadMaestro();
-    EntidadHorasAsignacion entidadHoras=new EntidadHorasAsignacion();
-    ControlMaestro controlMaestro1=new ControlMaestro();
-    ControlHorasAsignacion controlHoras=new ControlHorasAsignacion();
-    String horas="";
-    String imagen="";
-    int hora=0;
-    String fecha="";
-    int buscar=0;
-    
+    EntidadMaestro modelMaestro = new EntidadMaestro();
+
+    ControlMaestro controlMaestro = new ControlMaestro();
+//    String horas = "";
+    String imagen = "";
+//    int hora = 0;
+//    String fecha = "";
+//    int buscar = 0;
+    int numEmpleado = 0;
+
     DefaultTableModel Modelo1;
-    SimpleDateFormat formato=new SimpleDateFormat("dd/MM/yyyy");
-    
-    
-    public JfInterfazMaestro() {
-        this.setLocation(380,20);
+
+    public InterfazMaestro() {
+        this.setLocation(380, 20);
         this.setTitle("Control de Maestro");
         initComponents();
         mostrarGeneralTabla();
         inhabilitar();
     }
-    
-    void inhabilitar(){
+
+    void limpiar() {
+        txtNumeroEmpleado.setText("");
+        txtNombre.setText("");
+        txtApellidoPaternno.setText("");
+        txtApellidoMaterno.setText("");
+        cbxHorasAsignadas.setSelectedIndex(0);
+    }
+
+    void inhabilitar() {
         txtNumeroEmpleado.setEnabled(true);
         txtNombre.setEnabled(true);
         txtApellidoPaternno.setEnabled(true);
         txtApellidoMaterno.setEnabled(true);
         cbxHorasAsignadas.setEnabled(true);
-        
+
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnRegistrar.setEnabled(true);
         btnLimpiar.setEnabled(true);
         btnSalir.setEnabled(true);
         btnRegistrar.setText("Registrar");
-         
+
         txtNumeroEmpleado.setText("");
         txtNombre.setText("");
         txtApellidoPaternno.setText("");
         txtApellidoMaterno.setText("");
-        cbxHorasAsignadas.setSelectedItem("(Ninguno)");
-        
+        cbxHorasAsignadas.setSelectedIndex(0);
+
     }
-    void habilitarNuevo(){
+
+    void habilitarNuevo() {
         txtNumeroEmpleado.setText("");
         txtNombre.setText("");
         txtApellidoPaternno.setText("");
         txtApellidoMaterno.setText("");
-        cbxHorasAsignadas.setSelectedItem("(Ninguno)");
+        cbxHorasAsignadas.setSelectedIndex(0);
         btnRegistrar.setEnabled(true);
-        
+
     }
-    void habilitar(){
-        
+
+    void habilitar() {
+
         txtNumeroEmpleado.setEnabled(true);
         txtNombre.setEnabled(true);
         txtApellidoPaternno.setEnabled(true);
         txtApellidoMaterno.setEnabled(true);
         btnRegistrar.setEnabled(false);
         cbxHorasAsignadas.setEnabled(true);
-        
+
     }
-    
-    void habilitarModificar(){
+
+    void habilitarModificar() {
         txtNombre.setEnabled(true);
         txtApellidoPaternno.setEnabled(true);
         txtApellidoMaterno.setEnabled(true);
@@ -102,60 +106,56 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
     }
-    
-    void inhabilitarSeleccion(){
+
+    void inhabilitarSeleccion() {
         txtNumeroEmpleado.setEnabled(false);
         txtNombre.setEnabled(false);
         txtApellidoPaternno.setEnabled(false);
         txtApellidoMaterno.setEnabled(false);
         cbxHorasAsignadas.setEnabled(false);
-        
+
     }
-    void habilitarSeleccion(){
+
+    void habilitarSeleccion() {
         btnModificar.setEnabled(true);
         btnEliminar.setEnabled(true);
     }
-    
-    void mostrarEspecificoTabla(int buscar){
+
+    void mostrarEspecificoTabla(int buscar) {
         try {
-        
-            Modelo1=controlMaestro1.consultarMaestroTabla(buscar);
-            tbMaestro.setModel(Modelo1);
-            
 
-        
+            Modelo1 = controlMaestro.consultarMaestroTabla(buscar);
+            tbMaestro.setModel(Modelo1);
+
         } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    void mostrarGeneralTabla(){
+
+    void mostrarGeneralTabla() {
         try {
-        
-            Modelo1=controlMaestro1.consultarGeneralMaestroTabla();
+
+            Modelo1 = controlMaestro.consultarGeneralMaestroTabla();
             tbMaestro.setModel(Modelo1);
-            
 
-        
         } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-    }
-    
-    public boolean validar(String cadena){
-        int n;
-        try{
-            n=Integer.parseInt(cadena);
-        return true;
-            
-        }catch(Exception e){
-            return false;
-        }
-        
-        
+
     }
 
+//    public boolean validar(String cadena) {
+//        int n;
+//        try {
+//            n = Integer.parseInt(cadena);
+//            return true;
+//
+//        } catch (Exception e) {
+//            return false;
+//        }
+//
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -284,8 +284,13 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
         lbHorasAsignadas.setText("Horas Asignadas:");
 
         cbxHorasAsignadas.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
-        cbxHorasAsignadas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Ninguno)", "1 hrs", "2 hrs", "3 hrs", "4 hrs", "5 hrs", "6 hrs", "7 hrs", "8 hrs", "9 hrs", "10 hrs", "11 hrs", "12 hrs", "13 hrs", "14 hrs", "15 hrs", "16 hrs", "17 hrs", "18 hrs", "19 hrs", "20 hrs", "21 hrs", "22 hrs", "23 hrs", "24 hrs", "25 hrs", "26 hrs", "27 hrs", "28 hrs", "29 hrs", "30 hrs", "31 hrs", "32 hrs", "33 hrs", "34 hrs", "35 hrs", "36 hrs", "37 hrs", "38 hrs", "39 hrs", "40 hrs" }));
+        cbxHorasAsignadas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione horas", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40" }));
         cbxHorasAsignadas.setToolTipText("Ingrese horas asignadas al Maestro a la semana");
+        cbxHorasAsignadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxHorasAsignadasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -442,24 +447,24 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
 
         tbMaestro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Num. Empleado", "Nombre", "Ape. Paterno", "Ape. Materno", "Fecha de Ingreso", "Horas Asignadas"
+
             }
         ));
         tbMaestro.setToolTipText("Lista de Maestros Registrados");
@@ -571,135 +576,111 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_btnSalirActionPerformed
-
+//PB13: HU07 Como subdirector quiero poder dar de alta a los maestros
     private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
-       
-        
-        ImageIcon icon=new ImageIcon(imagen);      
-        String horas="(Ninguno)";
-        
-        String cadena=btnRegistrar.getText();
 
+        ImageIcon icon = new ImageIcon(imagen);
+        String cadena = btnRegistrar.getText();
+        String numero = txtNumeroEmpleado.getText();
+        String nombre = txtNombre.getText();
+        String apellidoPaterno = txtApellidoPaternno.getText();
+        String apellidoMaterno = txtApellidoMaterno.getText();
+        int horasSeleccionadas = cbxHorasAsignadas.getSelectedIndex();
 
-        String numero=txtNumeroEmpleado.getText();
-        int numeroEmpleado=Integer.parseInt(numero);
-        String nombre=txtNombre.getText();
-        String apellidoPaterno=txtApellidoPaternno.getText();
-        String apellidoMaterno=txtApellidoMaterno.getText();
-        int seleccionado=cbxHorasAsignadas.getSelectedIndex();
-        String horaAsignada=(String) cbxHorasAsignadas.getItemAt(seleccionado);
-
-        
-        if(cadena.equalsIgnoreCase("Registrar")){
-            if(numero.equals("")){
+        if (cadena.equalsIgnoreCase("Registrar")) {
+            // C03: CODIGO QUE VALIDAN  CAMPOS  VACÍOS
+            if (numero.equals("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese numero de empleado");
             }
-            else{
-                if(!numero.matches("[0-9]*")){
-                    JOptionPane.showMessageDialog(null, "no es numero");
-                }else{
-                    
-                    JOptionPane.showMessageDialog(null, "es numero");
-                    if(nombre.equals("")){
-                        JOptionPane.showMessageDialog(null, "Ingrese Nombre del Maestro");
-                    }
-                    else{
-                        if(apellidoPaterno.equals("")){
-                            JOptionPane.showMessageDialog(null, "Ingrese Apllido Paterno");
-                        }
-                        else{
-                            if(apellidoMaterno.equals("")){
-                                JOptionPane.showMessageDialog(null, "Ingrese apellido Materno");
-                            }
-                            else{
-                                    if(horaAsignada.equalsIgnoreCase("(Ninguno)")){
-                                    JOptionPane.showMessageDialog(null, "Ingrese las Horas Asignadas");
-                                    }
-                                    else{
-//                                        if(horaAsignada.equalsIgnoreCase("Jornada 20 HRS")){
-//                                            hora=20;
-//                                        }
-//                                        if(horaAsignada.equalsIgnoreCase("Jornada 30 HRS")){
-//                                            hora=30;
-//                                        }
-//                                        if(horaAsignada.equalsIgnoreCase("Jornada 40 HRS")){
-//                                            hora=40;
-//                                        }
-//                                    
-                                        JOptionPane.showMessageDialog(null, "Se seleccino "+hora);
-                                        if(cadena.equalsIgnoreCase("Registrar")){
-                                        
-                                            modelMaestro.setNumeroEmpleado(numeroEmpleado);
-                                            modelMaestro.setNombre(nombre);
-                                            modelMaestro.setApePaterno(apellidoPaterno);
-                                            modelMaestro.setApeMaterno(apellidoMaterno);
-                                            modelMaestro.setHorasAsignadas(hora);
-                                            
-//                                           HU07 Debe permitir  hacer registros nuevos
-                                            controlMaestro1.registrarMaestro(modelMaestro);
-                                            
-                                            // guarda la cantidad de horas para disponibilidad del maestro
-                                            entidadHoras.setHoras(hora);
-                                            entidadHoras.setNumeroEmpleado(numeroEmpleado);
-                                            controlHoras.registrarHoras(entidadHoras);
-                                            
-                                        
-                                            mostrarGeneralTabla();
-                                            inhabilitar();
-                                            fecha="";
-                                            hora=0;
-                                        }
-                                        if(cadena.equalsIgnoreCase("Guardar cambios")){
-                                            modelMaestro.setNumeroEmpleado(numeroEmpleado);
-                                            modelMaestro.setNombre(nombre);
-                                            modelMaestro.setApePaterno(apellidoPaterno);
-                                            modelMaestro.setApeMaterno(apellidoMaterno);
-
-                                            modelMaestro.setHorasAsignadas(hora);
-                                            controlMaestro1.modificarMaestro(modelMaestro);
-//                                          materia=0;
-//     HU07 se debe vizualizar    la información de registros nuevos  y los  existentes
-                                            mostrarGeneralTabla();
-                                            inhabilitar();
-                                        }
-                                    }
-//                                }
-                            }
-                        }
-                    }
-                }
+            //C03: CODIGO QUE VALIDAN  CAMPOS  VACÍOS
+            if (nombre.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese Nombre del Maestro");
             }
-            
+            //C03:CODIGO QUE VALIDAN  CAMPOS  VACÍOS
+            if (apellidoPaterno.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese Apellido Paterno");
+            }
+            //C03:CODIGO QUE VALIDAN  CAMPOS  VACÍOS
+            if (apellidoMaterno.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese apellido Materno");
+            }
+            //C03:CODIGO QUE VALIDAN  CAMPOS  NO SELECCIONADO
+            if (cbxHorasAsignadas.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(null, "Seleccione las Horas Asignadas");
+            } else {
+                int numeroEmpleado = Integer.parseInt(numero);
+                //SE  AGREGAN LOS  DATOS A LA ENTIDAD MAESTRO
+                modelMaestro.setNumeroEmpleado(numeroEmpleado);
+                modelMaestro.setNombre(nombre);
+                modelMaestro.setApePaterno(apellidoPaterno);
+                modelMaestro.setApeMaterno(apellidoMaterno);
+                modelMaestro.setHorasAsignadas(horasSeleccionadas);
+
+//                 C01:MÉTODO  QUE REGISTRA  UN NUEVO MAESTRO
+                controlMaestro.registrarMaestro(modelMaestro);
+                mostrarGeneralTabla();
+                inhabilitar();
+                
+
+            }
         }
-        if(cadena.equalsIgnoreCase("Guardar cambios")){
-            
-            if(horaAsignada.equalsIgnoreCase("Jornada 20 HRS")){
-                                            hora=20;
-                                        }
-                                        if(horaAsignada.equalsIgnoreCase("Jornada 30 HRS")){
-                                            hora=30;
-                                        }
-                                        if(horaAsignada.equalsIgnoreCase("Jornada 40 HRS")){
-                                            hora=40;
-                                        }
-            
-            modelMaestro.setNumeroEmpleado(numeroEmpleado);
-            modelMaestro.setNombre(nombre);
-            modelMaestro.setApePaterno(apellidoPaterno);
-            modelMaestro.setApeMaterno(apellidoMaterno);
-            modelMaestro.setHorasAsignadas(hora);
-//            modelMaestro1.setFechaIngreso(fecha);
-            
-            
-            controlMaestro1.modificarMaestro(modelMaestro);
-            mostrarGeneralTabla();
-            inhabilitar();
-            
+//      PBI3 :HU08 Como subdirector poder modificar a los maestros registrados
+        if (cadena.equalsIgnoreCase("Guardar cambios")) {
+            if (numero.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese numero de empleado");
+            }
+            //C03:CODIGO QUE VALIDAN  CAMPOS  VACÍOS
+            if (nombre.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese Nombre del Maestro");
+            }
+            //C03:CODIGO QUE VALIDAN  CAMPOS  VACÍOS
+            if (apellidoPaterno.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese Apellido Paterno");
+            }
+            //C03:CODIGO QUE VALIDAN  CAMPOS  VACÍOS
+            if (apellidoMaterno.equals("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese apellido Materno");
+            }
+            //C03:CODIGO QUE VALIDAN  CAMPOS  NO  SELECCIONADO
+            if (cbxHorasAsignadas.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(null, "Seleccione las Horas Asignadas");
+            } else {
+                //VARIABLE  QUE  GUARDA UN MAESTRO SI  ESTE  SE  ENCUENTRA EN LA TABLA HORARIO
+                int maestroEncontrado = 0;
+
+                int numeroEmpleado = Integer.parseInt(numero);
+                try {
+                    //MÉTODO   QUE  VALIDA  SI  UN  MAESTRO TIENE  UN  HORARIO  REGISTRADO
+                    maestroEncontrado = controlMaestro.consultarMaestroTieneHorario(numeroEmpleado);
+                } catch (SQLException ex) {
+                    Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+                }
+//                System.out.println("maestroEncontrado" + maestroEncontrado);
+
+                if (maestroEncontrado == numeroEmpleado) {
+                    JOptionPane.showMessageDialog(rootPane, "MAESTRO(A) " + nombre + " NO SE PUEDE MODIFICAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    inhabilitar();
+                } else {
+//                int numeroEmpleado = Integer.parseInt(numero);
+//                modelMaestro.setNumeroEmpleado(numeroEmpleado);
+                    modelMaestro.setNombre(nombre);
+                    modelMaestro.setApePaterno(apellidoPaterno);
+                    modelMaestro.setApeMaterno(apellidoMaterno);
+                    modelMaestro.setHorasAsignadas(horasSeleccionadas);
+//                    System.out.println("numEmpleado" + numeroEmpleado);
+// C01:MÉTODO   QUE  MODIFICA  UN MAESTRO  EXISTENTE
+                    controlMaestro.modificarMaestro(modelMaestro, numeroEmpleado);
+
+//     se vizualiza la información de registros nuevos  y los  existentes en tabla
+                    mostrarGeneralTabla();
+//                activa y  desactiva botones y  caja d e texto
+                    inhabilitar();
+                }
+
+            }
         }
-             
-           
     }//GEN-LAST:event_btnRegistrarMouseClicked
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
@@ -707,79 +688,60 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+
         String numE;
         String nom;
         String aP;
         String aM;
         String fI;
         String hA;
-        String mensaj[]=null;
-        String seleccionHoras="";
-        try {
-            // TODO add your handling code here:
-            String numbuscar=txtBuscar.getText();
-            if(numbuscar.equalsIgnoreCase("")){
-                JOptionPane.showMessageDialog(null,"Campo vacio ingrese maestro a Buscar","Inane warning",JOptionPane.WARNING_MESSAGE);
-                
-            }else{
-                 
-                 int numeroEmpleado=Integer.parseInt(numbuscar);
-//                 mostrarEspecificoTabla(numeroEmpleado);
-                 String mensaje=controlMaestro1.consultarMaestroEspecifico(numeroEmpleado);
-            if(mensaje.equalsIgnoreCase("")){
-              
-                JOptionPane.showMessageDialog(null,"El Maestro no se encuentra registrado","Inane warning",JOptionPane.WARNING_MESSAGE);
-                txtBuscar.setText("");
-                mostrarGeneralTabla();
-                
-            }else{
-                mensaj=mensaje.split("-");
-            numE=mensaj[0].trim();
-            nom=mensaj[1].trim();
-            aP=mensaj[2].trim();
-            aM=mensaj[3].trim();
-            fI=mensaj[4].trim();
-            hA=mensaj[5].trim();
-            
-            txtNumeroEmpleado.setText(numE);
-            txtNombre.setText(nom);
-            txtApellidoPaternno.setText(aP);
-            txtApellidoMaterno.setText(aM);
-            
-        try {
-            Date fechadate=formato.parse(fI);
-//            DatoCalendario.setDate(fechadate);
-        } catch (ParseException ex) {
-            Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+        String mensaj[] = null;
+        String seleccionHoras = "";
+
+        String numbuscar = txtBuscar.getText();
+//        VALIDA CAMPO VACÍO 
+        if (numbuscar.equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(null, "Campo vacio ingrese maestro a Buscar", "Inane warning", JOptionPane.WARNING_MESSAGE);
+
+        } else {
+
+            try {
+                int numeroEmpleado = Integer.parseInt(numbuscar);
+//C02:MÉTODO  QUE BUSCA  UN MAESTRO POR NUMERO DE EMPLEADO 
+                String mensaje = controlMaestro.consultarMaestroEspecifico(numeroEmpleado);
+                if (mensaje.equalsIgnoreCase("")) {
+
+                    JOptionPane.showMessageDialog(null, "El Maestro no se encuentra registrado", "Inane warning", JOptionPane.WARNING_MESSAGE);
+                    txtBuscar.setText("");
+                    mostrarGeneralTabla();
+
+                } else {
+//                    System.out.println("mensaje" + mensaje);
+//    PARTE  LA CADENA  EN PARTES PARA ENVIARLO A CAJAS  DE  TEXTO
+                    mensaj = mensaje.split("-");
+                    numE = mensaj[0].trim();
+                    nom = mensaj[1].trim();
+                    aP = mensaj[1].trim();
+                    aM = mensaj[2].trim();
+                    hA = mensaj[4].trim();
+
+                    txtNumeroEmpleado.setText(numE);
+                    txtNombre.setText(nom);
+                    txtApellidoPaternno.setText(aP);
+                    txtApellidoMaterno.setText(aM);
+
+                    cbxHorasAsignadas.setSelectedItem(hA);
+                    inhabilitarSeleccion();
+                    habilitarSeleccion();
+                    txtBuscar.setText("");
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
-        if(hA.equals("20")){
-            seleccionHoras="Jornada 20 HRS";
-        }
-        if(hA.equals("30")){
-            seleccionHoras="Jornada 30 HRS";
-        }
-        if(hA.equals("40")){
-            seleccionHoras="Jornada 40 HRS";
-        }
-
-        cbxHorasAsignadas.setSelectedItem(seleccionHoras);
-        inhabilitarSeleccion();
-        habilitarSeleccion();
-        txtBuscar.setText("");
-                
-            }
-                
-            }
-            
-           
-            
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -788,50 +750,34 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtBuscarKeyTyped
 
     private void tbMaestroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMaestroMouseClicked
         // TODO add your handling code here:
         habilitar();
-        
-        String seleccionHoras="";
         inhabilitarSeleccion();
         habilitarSeleccion();
-        int fila=tbMaestro.rowAtPoint(evt.getPoint());
-        
+        int fila = tbMaestro.rowAtPoint(evt.getPoint());
 
-        txtNumeroEmpleado.setText(tbMaestro.getValueAt(fila, 0).toString());
-        txtNombre.setText(tbMaestro.getValueAt(fila, 1).toString());
-        txtApellidoPaternno.setText(tbMaestro.getValueAt(fila, 2).toString());
-        txtApellidoMaterno.setText(tbMaestro.getValueAt(fila, 3).toString());
-        String dato=tbMaestro.getValueAt(fila, 4).toString();
-//        try {
-////            Date fechadate=formato.parse(dato);
-////            DatoCalendario.setDate(fechadate);
-//        } catch (ParseException ex) {
-//            Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        String horas=tbMaestro.getValueAt(fila, 5).toString();
-        
-        if(horas.equals("20")){
-            seleccionHoras="Jornada 20 HRS";
-        }
-        if(horas.equals("30")){
-            seleccionHoras="Jornada 30 HRS";
-        }
-        if(horas.equals("40")){
-            seleccionHoras="Jornada 40 HRS";
+        if (fila >= 0) {
+
+            txtNumeroEmpleado.setText(tbMaestro.getValueAt(fila, 0).toString());
+            txtNombre.setText(tbMaestro.getValueAt(fila, 1).toString());
+            txtApellidoPaternno.setText(tbMaestro.getValueAt(fila, 2).toString());
+            txtApellidoMaterno.setText(tbMaestro.getValueAt(fila, 3).toString());
+            cbxHorasAsignadas.setSelectedItem(tbMaestro.getValueAt(fila, 4).toString());
+
+        } else {
+            JOptionPane.showMessageDialog(null, "no seleciono fila");
         }
 
-        cbxHorasAsignadas.setSelectedItem(seleccionHoras);
-            
     }//GEN-LAST:event_tbMaestroMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         // TODO add your handling code here:
         habilitarModificar();
- 
+
     }//GEN-LAST:event_btnModificarMouseClicked
 
     private void btnLimpiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLimpiarMouseClicked
@@ -843,27 +789,47 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
     private void btnRegistrarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistrarMouseEntered
-
+//PBI3: HU09 Como subdirector quiero poder dar de baja a los maestros registrados
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:
-        String numEmpleado=txtNumeroEmpleado.getText();
-        int empleado=Integer.parseInt(numEmpleado);
-         int confirmacion =JOptionPane.showConfirmDialog(null,"Seguro deseas eliminar","Inane warning",JOptionPane.YES_NO_OPTION);
 
-        if(confirmacion==0){
-            modelMaestro.setNumeroEmpleado(empleado);
-            controlMaestro1.eliminarMaestro(modelMaestro);
-            mostrarGeneralTabla();
-            inhabilitar();
-            
+        String numEmpleado = txtNumeroEmpleado.getText();
+
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar", "Inane warning", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == 0) {
+
+            int maestroEncontrado = 0;
+            int empleado = Integer.parseInt(numEmpleado);
+            try {
+                //C02:MÉTODO   QUE  VALIDA  SI  UN  MAESTRO TIENE  UN  HORARIO  REGISTRADO
+                maestroEncontrado = controlMaestro.consultarMaestroTieneHorario(empleado);
+                inhabilitar();
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+//                System.out.println("maestroEncontrado" + maestroEncontrado);
+
+            if (maestroEncontrado == empleado) {
+                JOptionPane.showMessageDialog(rootPane, "MAESTRO(A) " + empleado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+                inhabilitar();
+            } else {
+                modelMaestro.setNumeroEmpleado(empleado);
+                //C01:MÉTODO  QUE  ELIMINA UN REGISTRO EXISTENTE EN MAESTRO
+                controlMaestro.eliminarMaestro(modelMaestro);
+//                MUESTRA DATOS EN LA TABLA
+                mostrarGeneralTabla();
+//                HABILITA  BOTONES 
+                inhabilitar();
+
+            }
         }
-        
+
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void txtNumeroEmpleadoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumeroEmpleadoKeyTyped
-//     HU07 Debe validar ingreso de letras y números en los  campos numero empleado
-        char k= evt.getKeyChar();
-        if(Character.isLetter(k)){
+//     C04: Debe validar ingreso de letras y números en los  campos numero empleado
+        char k = evt.getKeyChar();
+        if (Character.isLetter(k)) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "No se puede ingresar Letras", "Error Datos", JOptionPane.ERROR_MESSAGE);
@@ -877,6 +843,11 @@ public class JfInterfazMaestro extends javax.swing.JInternalFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void cbxHorasAsignadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxHorasAsignadasActionPerformed
+        // TODO add your handling code here:
+        cbxHorasAsignadas.requestFocus();
+    }//GEN-LAST:event_cbxHorasAsignadasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

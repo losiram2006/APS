@@ -138,7 +138,7 @@ public class InterfazAsignarMateria extends javax.swing.JInternalFrame {
 
         
         } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

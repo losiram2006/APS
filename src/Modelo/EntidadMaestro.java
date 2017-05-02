@@ -5,10 +5,7 @@
  */
 package Modelo;
 
-/**
- *
- * @author julve
- */
+
 public class EntidadMaestro {
     public int numeroEmpleado;
     public String Nombre;

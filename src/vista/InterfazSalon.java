@@ -79,7 +79,7 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
             tbSalon.getColumnModel().getColumn(0).setMaxWidth(0);
 
         } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -556,7 +556,7 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazMateria.class
+            Logger.getLogger(InterfazMateria.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 

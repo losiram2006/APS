@@ -19,40 +19,36 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author julve
  */
-public class JfInterfazMateria extends javax.swing.JInternalFrame {
+public class InterfazMateria extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form CaMaterias
      */
-    EntidadMateria modelMateria=new EntidadMateria();
-    ControlMateria controlMateria1=new ControlMateria();
-    String horas="";
-    int materia=0;
-    String imagen="";
-    
+    EntidadMateria modelMateria = new EntidadMateria();
+    ControlMateria controlMateria = new ControlMateria();
+    String horas = "";
+    int materia = 0;
+    String imagen = "";
+
     DefaultTableModel modelo1;
-    
-    
-    
-    public JfInterfazMateria() {
-        this.setLocation(380,20);
+
+    public InterfazMateria() {
+        this.setLocation(380, 20);
         this.setTitle("Control de Materia");
 
         initComponents();
         mostrar("");
         inhabilitar();
     }
-    
-    
-    void inhabilitar(){
-        
+
+    void inhabilitar() {
+
         btnModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         btnRegistrar.setEnabled(true);
         btnCancelar.setEnabled(true);
         btnSalir.setEnabled(true);
-        
-        
+
         txtClaveMateria.setEnabled(true);
         txtNombreMateria.setEnabled(true);
         cbxSemestreMateria.setEnabled(true);
@@ -60,61 +56,59 @@ public class JfInterfazMateria extends javax.swing.JInternalFrame {
         txtClaveMateria.setText("");
         txtNombreMateria.setText("");
         txtHorasSemana.setText("");
-        cbxSemestreMateria.setSelectedItem("(Ninguno)");
+        cbxSemestreMateria.setSelectedIndex(0);
         btnRegistrar.setText("Registrar");
-      
+
     }
-    
-    void habilitar(){
-                
+
+    void habilitar() {
+
         txtClaveMateria.setEnabled(true);
         txtNombreMateria.setEnabled(true);
         txtHorasSemana.setEnabled(true);
         btnRegistrar.setEnabled(false);
         cbxSemestreMateria.setEnabled(true);
-          
+
     }
-    
-    void habilitarModificar(){
-        
+
+    void habilitarModificar() {
 
         txtNombreMateria.setEnabled(true);
         txtHorasSemana.setEnabled(true);
         cbxSemestreMateria.setEnabled(true);
         btnRegistrar.setText("Guardar Cambios");
+        btnRegistrar.setEnabled(true);
         btnModificar.setEnabled(false);
-        btnEliminar.setEnabled(false);     
+        btnEliminar.setEnabled(false);
 
     }
-    
-        void inhabilitarSeleccion(){
+
+    void inhabilitarSeleccion() {
         txtClaveMateria.setEnabled(false);
         txtNombreMateria.setEnabled(false);
         cbxSemestreMateria.setEnabled(false);
         txtHorasSemana.setEnabled(false);
 
-        
     }
-            void habilitarSeleccion(){
+
+    void habilitarSeleccion() {
         btnModificar.setEnabled(true);
         btnEliminar.setEnabled(true);
 
     }
-        
-    void mostrar(String buscar){
-        try {
-        
 
-            modelo1=controlMateria1.ConsultarMateria(buscar);
+    void mostrar(String buscar) {
+        try {
+
+            modelo1 = controlMateria.ConsultarMateria(buscar);
             tbMateria.setModel(modelo1);
-            
-        
+
         } catch (SQLException ex) {
-            Logger.getLogger(JfInterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -172,7 +166,7 @@ public class JfInterfazMateria extends javax.swing.JInternalFrame {
         txtNombreMateria.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
 
         cbxSemestreMateria.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
-        cbxSemestreMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "(Ninguno)", "1", "2", "3", "4", "5", "6" }));
+        cbxSemestreMateria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona", "1", "2", "3", "4", "5", "6" }));
 
         lbHorasSemana.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbHorasSemana.setText("Cantidad Horas Semanal:");
@@ -458,97 +452,147 @@ public class JfInterfazMateria extends javax.swing.JInternalFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-        
+
         this.setVisible(false);
     }//GEN-LAST:event_btnSalirActionPerformed
-
+//  PBI4: HU10 Como subdirector quiero poder dar de alta las materias
     private void btnRegistrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarMouseClicked
-        // TODO add your handling code here:   
-        String horas="(Ninguno)";
-        int hora=0;
-        String fecha="";
-        String Clave="";
-        String Nombre="";
-        String Horas="";
-        int seleccionado=0;
-        String Semestre="";
-        int numeroSemestre=0;
-        int ClaveMateria=0;
-        int HorasMateria=0;
-        String boton=btnRegistrar.getText();
-        Clave=txtClaveMateria.getText();
-        Nombre=txtNombreMateria.getText();
-        Horas=txtHorasSemana.getText();
-        
-        seleccionado=cbxSemestreMateria.getSelectedIndex();
-        Semestre=(String) cbxSemestreMateria.getItemAt(seleccionado);
-        numeroSemestre=Integer.parseInt(Semestre);
-        ClaveMateria=Integer.parseInt(Clave);
-        HorasMateria=Integer.parseInt(Horas);
-        
-       
-        if(boton.equalsIgnoreCase("Registrar")){
-            if(ClaveMateria==0){
+
+        String boton = btnRegistrar.getText();
+        String Clave = txtClaveMateria.getText();
+        String Nombre = txtNombreMateria.getText();
+        String Horas = txtHorasSemana.getText();
+        int seleccionado = cbxSemestreMateria.getSelectedIndex();
+
+        if (boton.equalsIgnoreCase("Registrar")) {
+//            VALIDA CAMPOS VACÍO
+            if (Clave.equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "Ingrese la Clave de la Materia");
-            }else{
-                if(Nombre.equalsIgnoreCase("")){
-                    JOptionPane.showMessageDialog(null, "Ingrese ");
+            }
+            //     VALIDA CAMPOS VACÍO
+            if (Nombre.equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese nombre de la materia ");
+            }
+//          VALIDA CAMPOS VACÍO
+            if (seleccionado == 0) {
+                JOptionPane.showMessageDialog(null, " Seleccione el Semestre ");
+            }
+            //     VALIDA CAMPOS VACÍO
+            if (Horas.equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(null, " Ingrese las horas ");
+            } else {
+
+                int claveMateria = Integer.parseInt(Clave);
+                int HorasMateria = Integer.parseInt(Horas);
+//ASIGNA  VALORES  A ENTIDAD
+                modelMateria.setClave(claveMateria);
+                modelMateria.setNombreMateria(Nombre);
+                modelMateria.setSemestreMateria(seleccionado);
+                modelMateria.setCantidadHoras(HorasMateria);
+//                MÉTODO  QUE REGISTRA LOS  DATOS DE LA MATERIA
+                controlMateria.RegistrarMateria(modelMateria);
+
+                btnRegistrar.setText("Nuevo");
+//                MUESTRA  LOS  DATOS EN LA TABLA
+                mostrar("");
+//                HABILITA BOTONES
+                inhabilitar();
+            }
+
+        }
+//PBI4: HU11 Como subdirector quiero poder modificar a las materias registradas
+        if (boton.equalsIgnoreCase("Guardar cambios")) {
+
+            //            VALIDA CAMPOS VACÍO
+            if (Clave.equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese la Clave de la Materia");
+            }
+            //     VALIDA CAMPOS VACÍO
+            if (Nombre.equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(null, "Ingrese nombre de la materia ");
+            }
+//          VALIDA CAMPOS VACÍO
+            if (seleccionado == 0) {
+                JOptionPane.showMessageDialog(null, " Seleccione el Semestre ");
+            }
+            //     VALIDA CAMPOS VACÍO
+            if (Horas.equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(null, " Ingrese las horas ");
+            } else {
+                try {
+                    //VARIABLE  QUE  GUARDA UN MATERIA SI  ESTE  SE  ENCUENTRA EN LA TABLA HORARIO
+                    int materiaEncontrada = 0;
+
+                    int claveMateria = Integer.parseInt(Clave);
+                    //MÉTODO   QUE  VALIDA  SI  UNA MATERIA TIENE  UN  HORARIO  REGISTRADO
+                    materiaEncontrada = controlMateria.consultarMateriaTieneHorario(claveMateria);
+
+//                System.out.println("materiaEncontrada" + materiaEncontrada);
+                    if (materiaEncontrada == claveMateria) {
+                        JOptionPane.showMessageDialog(rootPane, "MATERIA CON CLAVE NUMERO " + materiaEncontrada + " NO SE PUEDE MODIFICAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        inhabilitar();
+                    } else {
+//            int claveMateria = Integer.parseInt(Clave);
+                        int HorasMateria = Integer.parseInt(Horas);
+                        modelMateria.setClave(claveMateria);
+                        modelMateria.setNombreMateria(Nombre);
+                        modelMateria.setSemestreMateria(seleccionado);
+                        modelMateria.setCantidadHoras(HorasMateria);
+//MÉTODO QUE MODIFICA UNA MATERIA EXISTENTE
+                        controlMateria.modificarMateria(modelMateria, materia);
+                        materia = 0;
+                        mostrar("");
+                        inhabilitar();
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(InterfazMateria.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
- 
-        if(Semestre.equalsIgnoreCase("(Ninguno)")){
-            JOptionPane.showMessageDialog(null, " Seleccione el Semestre ");
         }
-        else{
-            
-            
-            modelMateria.setClave(ClaveMateria);
-            modelMateria.setNombreMateria(Nombre);
-            modelMateria.setSemestreMateria(numeroSemestre);
-            modelMateria.setCantidadHoras(HorasMateria);
-            controlMateria1.RegistrarMateria(modelMateria);
-            
-            
-            btnRegistrar.setText("Nuevo");
-            mostrar("");
-            inhabilitar();
-        }
-        
-        }
-        if(boton.equalsIgnoreCase("Guardar cambios")){
-            
-            modelMateria.setClave(ClaveMateria);
-            modelMateria.setNombreMateria(Nombre);
-            modelMateria.setSemestreMateria(numeroSemestre);
-            modelMateria.setCantidadHoras(HorasMateria);
-            controlMateria1.modificarMateria(modelMateria,materia);
-            materia=0;
-            mostrar("");
-            inhabilitar();
-            
-        }    
     }//GEN-LAST:event_btnRegistrarMouseClicked
 
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         // TODO add your handling code here:
         habilitarModificar();
     }//GEN-LAST:event_btnModificarMouseClicked
-
+//PBI4: HU12 Como subdirector quiero poder dar de baja a las materias registradas
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
-        String clave=txtClaveMateria.getText();
-        int claveEliminar=Integer.parseInt(clave);
-        
-        modelMateria.setClave(claveEliminar);
-        controlMateria1.eliminarMateria(modelMateria);
-        mostrar("");
-        inhabilitar();
+        String clave = txtClaveMateria.getText();
+
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar", "Inane warning", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == 0) {
+            int materiaEncontrada = 0;
+            int claveEliminar = Integer.parseInt(clave);
+            try {
+                //MÉTODO   QUE  VALIDA  SI  UNA MATERIA TIENE   UN  HORARIO  REGISTRADO
+                materiaEncontrada = controlMateria.consultarMateriaTieneHorario(claveEliminar);
+                inhabilitar();
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (materiaEncontrada == claveEliminar) {
+                JOptionPane.showMessageDialog(rootPane, "LA MATERIA CON CLAVE  " + claveEliminar + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+                inhabilitar();
+            } else {
+
+                modelMateria.setClave(claveEliminar);
+                //MÉTODO QUE ELIMINA UNA MATERIA EXISTENTE
+                controlMateria.eliminarMateria(modelMateria);
+                mostrar("");
+                inhabilitar();
+            }
+        }
+
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
         // TODO add your handling code here:
         inhabilitar();
-        
+
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
@@ -557,73 +601,72 @@ public class JfInterfazMateria extends javax.swing.JInternalFrame {
         String nomma;
         String sma;
         String canth;
-        String mensaj[]=null;
-        String seleccionHoras="";
+        String mensaj[] = null;
+        String seleccionHoras = "";
         try {
-            String buscar=txtBuscaMateria.getText();
-            if(buscar.equalsIgnoreCase("")){
-                JOptionPane.showMessageDialog(null,"Campo vacio ingrese materia a Buscar","Inane warning",JOptionPane.WARNING_MESSAGE);
-                
-            }else{
+            String buscar = txtBuscaMateria.getText();
+            //VALIDA CAMPO VACÍO
+            if (buscar.equalsIgnoreCase("")) {
+                JOptionPane.showMessageDialog(null, "Campo vacio ingrese materia a Buscar", "Inane warning", JOptionPane.WARNING_MESSAGE);
+
+            } else {
+                //MUESTRA DATOS EN LA TABLA
                 mostrar(buscar);
-            String mensaje="";
-            
-                mensaje = controlMateria1.consultarMateriaEspecifico(buscar);
-                 if(mensaje.equalsIgnoreCase("")){
-              
-                JOptionPane.showMessageDialog(null,"La Materia no se encuentra registrado","Inane warning",JOptionPane.WARNING_MESSAGE);
-                txtBuscaMateria.setText("");
-                mostrar("");
-                
-            }else{
-                     mensaj=mensaje.split("-");
-                    cla=mensaj[0].trim();
-                    nomma=mensaj[1].trim();
-                    sma=mensaj[2].trim();
-                    canth=mensaj[3].trim();
-            
+                String mensaje = "";
+             //03:MÉTODO QUE  CONSULTA UNA  MATERIA ESPECÍFICA
+                mensaje = controlMateria.consultarMateriaEspecifico(buscar);
+                if (mensaje.equalsIgnoreCase("")) {
+
+                    JOptionPane.showMessageDialog(null, "La Materia no se encuentra registrado", "Inane warning", JOptionPane.WARNING_MESSAGE);
+                    txtBuscaMateria.setText("");
+                    mostrar("");
+
+                } else {
+                    //SE PARTE LO QUE  SE RECIBE  PARA ENVIARLOS A CAJAS DE TEXTO
+                    mensaj = mensaje.split("-");
+                    cla = mensaj[0].trim();
+                    nomma = mensaj[1].trim();
+                    sma = mensaj[2].trim();
+                    canth = mensaj[3].trim();
+
                     txtClaveMateria.setText(cla);
                     txtNombreMateria.setText(nomma);
-//            txtApellidoPaternno.setText(aP);
                     txtHorasSemana.setText(canth);
-                    
-                    if(sma.equals("1")){
-                        seleccionHoras="1";
+
+                    if (sma.equals("1")) {
+                        seleccionHoras = "1";
                     }
-                    if(sma.equals("2")){
-                        seleccionHoras="2";
+                    if (sma.equals("2")) {
+                        seleccionHoras = "2";
                     }
-                    if(sma.equals("3")){
-                        seleccionHoras="3";
+                    if (sma.equals("3")) {
+                        seleccionHoras = "3";
                     }
-                    if(sma.equals("4")){
-                        seleccionHoras="4";
+                    if (sma.equals("4")) {
+                        seleccionHoras = "4";
                     }
-                    if(sma.equals("5")){
-                        seleccionHoras="5";
+                    if (sma.equals("5")) {
+                        seleccionHoras = "5";
                     }
-                    if(sma.equals("6")){
-                        seleccionHoras="6";
+                    if (sma.equals("6")) {
+                        seleccionHoras = "6";
                     }
 
                     cbxSemestreMateria.setSelectedItem(seleccionHoras);
                     inhabilitarSeleccion();
                     habilitarSeleccion();
                     txtBuscaMateria.setText("");
-                    mensaje="";
-                     
-                 }
-                
+                    mensaje = "";
+
+                }
+
             }
-            
-             
-                
-            } catch (SQLException ex) {
-                Logger.getLogger(JfInterfazMateria.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        
-        
+
+        } catch (SQLException ex) {
+            Logger.getLogger(InterfazMateria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void tbMateriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMateriaMouseClicked
@@ -631,47 +674,44 @@ public class JfInterfazMateria extends javax.swing.JInternalFrame {
         habilitar();
         inhabilitarSeleccion();
         habilitarSeleccion();
-        String seleccionHoras="";
-        
-        
-        int fila=tbMateria.rowAtPoint(evt.getPoint());
-        
+        String seleccionHoras = "";
+
+        int fila = tbMateria.rowAtPoint(evt.getPoint());
 
         txtClaveMateria.setText(tbMateria.getValueAt(fila, 0).toString());
         txtNombreMateria.setText(tbMateria.getValueAt(fila, 1).toString());
-        String mate=tbMateria.getValueAt(fila, 2).toString();
-        
+        String mate = tbMateria.getValueAt(fila, 2).toString();
 
-        if(mate.equals("1")){
-            seleccionHoras="1";
+        if (mate.equals("1")) {
+            seleccionHoras = "1";
         }
-        if(mate.equals("2")){
-            seleccionHoras="2";
+        if (mate.equals("2")) {
+            seleccionHoras = "2";
         }
-        if(mate.equals("3")){
-            seleccionHoras="3";
+        if (mate.equals("3")) {
+            seleccionHoras = "3";
         }
-        if(mate.equals("4")){
-            seleccionHoras="4";
+        if (mate.equals("4")) {
+            seleccionHoras = "4";
         }
-        if(mate.equals("5")){
-            seleccionHoras="5";
+        if (mate.equals("5")) {
+            seleccionHoras = "5";
         }
-        if(mate.equals("6")){
-            seleccionHoras="6";
+        if (mate.equals("6")) {
+            seleccionHoras = "6";
         }
 
         cbxSemestreMateria.setSelectedItem(seleccionHoras);
-        
+
         txtHorasSemana.setText(tbMateria.getValueAt(fila, 3).toString());
-        
-        materia=Integer.parseInt(txtClaveMateria.getText());
+
+        materia = Integer.parseInt(txtClaveMateria.getText());
     }//GEN-LAST:event_tbMateriaMouseClicked
 
     private void txtClaveMateriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClaveMateriaKeyTyped
-        // TODO add your handling code here:
-        char k= evt.getKeyChar();
-        if(Character.isLetter(k)){
+        // VALIDA  QUE  SE INGRESEN  SOLO NUMEROS  AL CAMPO CLAVE
+        char k = evt.getKeyChar();
+        if (Character.isLetter(k)) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "No se puede ingresar Letras", "Error Datos", JOptionPane.WARNING_MESSAGE);
@@ -683,9 +723,9 @@ public class JfInterfazMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscaMateriaKeyTyped
 
     private void txtHorasSemanaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHorasSemanaKeyTyped
-        // TODO add your handling code here:
-        char k= evt.getKeyChar();
-        if(Character.isLetter(k)){
+         // VALIDA  QUE  SE INGRESEN  SOLO NUMEROS  AL CAMPO HORAS
+        char k = evt.getKeyChar();
+        if (Character.isLetter(k)) {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "No se puede ingresar Letras", "Error Datos", JOptionPane.WARNING_MESSAGE);

@@ -353,7 +353,7 @@ public class JfInterfazPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.jdpEscritorio.removeAll();
         this.jdpEscritorio.repaint();
-        JfInterfazMaestro Maestro = new JfInterfazMaestro();
+        InterfazMaestro Maestro = new InterfazMaestro();
         Maestro.setVisible(true);
         jdpEscritorio.add(Maestro);
 //        lbImagen.setVisible(true);
@@ -363,7 +363,7 @@ public class JfInterfazPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.jdpEscritorio.removeAll();
         this.jdpEscritorio.repaint();
-        JfInterfazMateria Materia = new JfInterfazMateria();
+        InterfazMateria Materia = new InterfazMateria();
         Materia.setVisible(true);
         jdpEscritorio.add(Materia);
 //        lbImagen.setVisible(true);
