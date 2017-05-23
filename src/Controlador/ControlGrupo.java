@@ -51,7 +51,7 @@ public class ControlGrupo {
     public DefaultTableModel ConsultarGrupo(String buscar) throws SQLException {
         DefaultTableModel modelo;
 
-        String[] titulos = {"Numero de Grupo", "Semestre"};
+        String[] titulos = {"Número de Grupo", "Semestre"};
 
         String[] Grupos = new String[2];
 

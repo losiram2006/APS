@@ -205,7 +205,7 @@ public class InterfazMaestro extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         lbNumeroEmpleado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbNumeroEmpleado.setText("Numero de Empleado:");
+        lbNumeroEmpleado.setText("Número de Empleado:");
 
         txtNumeroEmpleado.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
         txtNumeroEmpleado.setToolTipText("Escribe numero de Empleado");
@@ -359,7 +359,7 @@ public class InterfazMaestro extends javax.swing.JInternalFrame {
 
         btnSalir.setBackground(new java.awt.Color(102, 102, 102));
         btnSalir.setFont(new java.awt.Font("Bodoni MT", 1, 14)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir-de-mi-perfil-icono-3964-32.png"))); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Salir.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSalir.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -397,6 +397,11 @@ public class InterfazMaestro extends javax.swing.JInternalFrame {
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
+            }
+        });
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -476,7 +481,7 @@ public class InterfazMaestro extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tbMaestro);
 
         lbNombreBuscar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbNombreBuscar.setText("Numero de Empleado:");
+        lbNombreBuscar.setText("Número de Empleado:");
 
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -622,7 +627,6 @@ public class InterfazMaestro extends javax.swing.JInternalFrame {
                 controlMaestro.registrarMaestro(modelMaestro);
                 mostrarGeneralTabla();
                 inhabilitar();
-                
 
             }
         }
@@ -657,6 +661,7 @@ public class InterfazMaestro extends javax.swing.JInternalFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
                 }
+//                System.out.println("maestroEncontrado" + maestroEncontrado);
 //                System.out.println("maestroEncontrado" + maestroEncontrado);
 
                 if (maestroEncontrado == numeroEmpleado) {
@@ -750,9 +755,13 @@ public class InterfazMaestro extends javax.swing.JInternalFrame {
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
         // TODO add your handling code here:
-
+        char k = evt.getKeyChar();
+        if (Character.isLetter(k)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "No se puede ingresar Letras", "Error Datos", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_txtBuscarKeyTyped
-
+    }
     private void tbMaestroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMaestroMouseClicked
         // TODO add your handling code here:
         habilitar();
@@ -792,37 +801,41 @@ public class InterfazMaestro extends javax.swing.JInternalFrame {
 //PBI3: HU09 Como subdirector quiero poder dar de baja a los maestros registrados
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
 
-        String numEmpleado = txtNumeroEmpleado.getText();
-
-        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar", "Inane warning", JOptionPane.YES_NO_OPTION);
-
-        if (confirmacion == 0) {
-
-            int maestroEncontrado = 0;
-            int empleado = Integer.parseInt(numEmpleado);
-            try {
-                //C02:MÉTODO   QUE  VALIDA  SI  UN  MAESTRO TIENE  UN  HORARIO  REGISTRADO
-                maestroEncontrado = controlMaestro.consultarMaestroTieneHorario(empleado);
-                inhabilitar();
-            } catch (SQLException ex) {
-                Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-//                System.out.println("maestroEncontrado" + maestroEncontrado);
-
-            if (maestroEncontrado == empleado) {
-                JOptionPane.showMessageDialog(rootPane, "MAESTRO(A) " + empleado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
-                inhabilitar();
-            } else {
-                modelMaestro.setNumeroEmpleado(empleado);
-                //C01:MÉTODO  QUE  ELIMINA UN REGISTRO EXISTENTE EN MAESTRO
-                controlMaestro.eliminarMaestro(modelMaestro);
-//                MUESTRA DATOS EN LA TABLA
-                mostrarGeneralTabla();
-//                HABILITA  BOTONES 
-                inhabilitar();
-
-            }
-        }
+//        String numEmpleado = txtNumeroEmpleado.getText();
+//        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar", "Inane warning", JOptionPane.YES_NO_OPTION);
+//
+//        if (txtNumeroEmpleado.equals("")&& txtNombre.equals("")&& txtApellidoPaternno.equals("")&&txtApellidoMaterno.equals("") ) {
+//           JOptionPane.showMessageDialog(null, "No tienes  datos a Eliminar");
+//            }else
+//            
+//            if (confirmacion == 0) {
+//
+//                int maestroEncontrado = 0;
+//                int empleado = Integer.parseInt(numEmpleado);
+//                try {
+//                    //C02:MÉTODO   QUE  VALIDA  SI  UN  MAESTRO TIENE  UN  HORARIO  REGISTRADO
+//                    maestroEncontrado = controlMaestro.consultarMaestroTieneHorario(empleado);
+//                    inhabilitar();
+//                } catch (SQLException ex) {
+//                    Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+////                System.out.println("maestroEncontrado" + maestroEncontrado);
+//
+//                if (maestroEncontrado == empleado) {
+//                    JOptionPane.showMessageDialog(rootPane, "MAESTRO(A) " + empleado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+//                    inhabilitar();
+//                } else {
+//                    modelMaestro.setNumeroEmpleado(empleado);
+//                    //C01:MÉTODO  QUE  ELIMINA UN REGISTRO EXISTENTE EN MAESTRO
+//                    controlMaestro.eliminarMaestro(modelMaestro);
+////                MUESTRA DATOS EN LA TABLA
+//                    mostrarGeneralTabla();
+////                HABILITA  BOTONES 
+//                    inhabilitar();
+//
+//                }
+//            
+//        }
 
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -848,6 +861,47 @@ public class InterfazMaestro extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         cbxHorasAsignadas.requestFocus();
     }//GEN-LAST:event_cbxHorasAsignadasActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        
+         String numEmpleado = txtNumeroEmpleado.getText();
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar", "Inane warning", JOptionPane.YES_NO_OPTION);
+//
+//        if (txtNumeroEmpleado.equals("")&& txtNombre.equals("")&& txtApellidoPaternno.equals("")&&txtApellidoMaterno.equals("") ) {
+//           JOptionPane.showMessageDialog(null, "No tienes  datos a Eliminar");
+//            }else
+            
+            if (confirmacion == 0) {
+
+                int maestroEncontrado = 0;
+                int empleado = Integer.parseInt(numEmpleado);
+                try {
+                    //C02:MÉTODO   QUE  VALIDA  SI  UN  MAESTRO TIENE  UN  HORARIO  REGISTRADO
+                    maestroEncontrado = controlMaestro.consultarMaestroTieneHorario(empleado);
+                    inhabilitar();
+                } catch (SQLException ex) {
+                    Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+                }
+//                System.out.println("maestroEncontrado" + maestroEncontrado);
+//                System.out.println("maestroEncontrado" + maestroEncontrado);
+
+                if (maestroEncontrado == empleado) {
+                    JOptionPane.showMessageDialog(rootPane, "MAESTRO(A) " + empleado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    inhabilitar();
+                } else {
+                    modelMaestro.setNumeroEmpleado(empleado);
+                    //C01:MÉTODO  QUE  ELIMINA UN REGISTRO EXISTENTE EN MAESTRO
+                    controlMaestro.eliminarMaestro(modelMaestro);
+//                MUESTRA DATOS EN LA TABLA
+                    mostrarGeneralTabla();
+//                HABILITA  BOTONES 
+                    inhabilitar();
+
+                }
+            
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

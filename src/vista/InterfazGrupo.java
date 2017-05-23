@@ -109,7 +109,7 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Detalle Grupo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bodoni MT", 1, 18))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setText("Numero de Grupo");
+        jLabel1.setText("Número de Grupo");
 
         txtNumeroGrupo.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
         txtNumeroGrupo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -206,6 +206,11 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
                 btnEliminarMouseClicked(evt);
             }
         });
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setBackground(new java.awt.Color(102, 102, 102));
         btnCancelar.setFont(new java.awt.Font("Bodoni MT", 1, 14)); // NOI18N
@@ -222,7 +227,7 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
 
         btnSalir.setBackground(new java.awt.Color(102, 102, 102));
         btnSalir.setFont(new java.awt.Font("Bodoni MT", 1, 14)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir-de-mi-perfil-icono-3964-32.png"))); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Salir.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSalir.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -305,7 +310,7 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
                 {null, null}
             },
             new String [] {
-                "Numero de Grupo", "Semestre"
+                "Número de Grupo", "Semestre"
             }
         ));
         tbGrupo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -545,34 +550,34 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
 
-        String numEliminar = txtNumeroGrupo.getText();
-        
-
-        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar grupo", "Inane warning", JOptionPane.YES_NO_OPTION);
-
-        if (confirmacion == 0) {
-            int numEli = Integer.parseInt(numEliminar);
-            modelGrupo.setNumeroGrupo(numEli);
-
-            int grupoEncontrado = 0;
-            try {
-//   MÉTODO QUE VALIDA SI EL  GRUPO TIENE  UN HORARIO ASIGNADO PARA NO MODIFICARLO O ELIMINARLO
-                grupoEncontrado = controlGrupo.consultarGrupoTieneHorario(grupo);
-            } catch (SQLException ex) {
-                Logger.getLogger(InterfazGrupo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (grupoEncontrado == grupo) {
-                JOptionPane.showMessageDialog(rootPane, "EL GRUPO " + grupoEncontrado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
-            } else {
-//   MÉTODO PARA ELIMINAR UN GRUPO
-                controlGrupo.eliminarGrupo(modelGrupo);
-//                MUESTRA DATOS  EN LA TABLA
-                mostrar("");
-//                HABILITA  BOTONES 
-                inhabilitar();
-
-            }
-        }
+//        String numEliminar = txtNumeroGrupo.getText();
+//        
+//
+//        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar grupo", "Inane warning", JOptionPane.YES_NO_OPTION);
+//
+//        if (confirmacion == 0) {
+//            int numEli = Integer.parseInt(numEliminar);
+//            modelGrupo.setNumeroGrupo(numEli);
+//
+//            int grupoEncontrado = 0;
+//            try {
+////   MÉTODO QUE VALIDA SI EL  GRUPO TIENE  UN HORARIO ASIGNADO PARA NO MODIFICARLO O ELIMINARLO
+//                grupoEncontrado = controlGrupo.consultarGrupoTieneHorario(grupo);
+//            } catch (SQLException ex) {
+//                Logger.getLogger(InterfazGrupo.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            if (grupoEncontrado == grupo) {
+//                JOptionPane.showMessageDialog(rootPane, "EL GRUPO " + grupoEncontrado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+//            } else {
+////   MÉTODO PARA ELIMINAR UN GRUPO
+//                controlGrupo.eliminarGrupo(modelGrupo);
+////                MUESTRA DATOS  EN LA TABLA
+//                mostrar("");
+////                HABILITA  BOTONES 
+//                inhabilitar();
+//
+//            }
+//        }
 
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -619,6 +624,38 @@ public class InterfazGrupo extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         cbxSemestre.requestFocus();
     }//GEN-LAST:event_cbxSemestreActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        String numEliminar = txtNumeroGrupo.getText();
+        
+
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar grupo", "Inane warning", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == 0) {
+            int numEli = Integer.parseInt(numEliminar);
+            modelGrupo.setNumeroGrupo(numEli);
+
+            int grupoEncontrado = 0;
+            try {
+//   MÉTODO QUE VALIDA SI EL  GRUPO TIENE  UN HORARIO ASIGNADO PARA NO MODIFICARLO O ELIMINARLO
+                grupoEncontrado = controlGrupo.consultarGrupoTieneHorario(grupo);
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfazGrupo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            if (grupoEncontrado == grupo) {
+                JOptionPane.showMessageDialog(rootPane, "EL GRUPO " + grupoEncontrado + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+            } else {
+//   MÉTODO PARA ELIMINAR UN GRUPO
+                controlGrupo.eliminarGrupo(modelGrupo);
+//                MUESTRA DATOS  EN LA TABLA
+                mostrar("");
+//                HABILITA  BOTONES 
+                inhabilitar();
+
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

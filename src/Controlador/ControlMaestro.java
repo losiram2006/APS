@@ -26,7 +26,7 @@ public class ControlMaestro {
     private Connection cn = mysql.conectar();
     private String sSQL = "";
 
-   //      C01:MÉTODO  QUE REGISTRA  UN NUEVO MAESTRO
+    //      C01:MÉTODO  QUE REGISTRA  UN NUEVO MAESTRO
     public boolean registrarMaestro(EntidadMaestro dts) {
         sSQL = "insert into maestro (NumeroEmpleado,Nombre,ApellidoPaterno,ApellidoMaterno,HorasAsignadas)"
                 + "values (?,?,?,?,?)";
@@ -124,7 +124,6 @@ public class ControlMaestro {
 
     }
 
-
     //C01: MÉTODO   QUE  MODIFICA  UN MAESTRO  EXISTENTE
     public boolean modificarMaestro(EntidadMaestro dts, int buscar) {
         sSQL = "update maestro set Nombre=?, ApellidoPaterno=?, ApellidoMaterno=?, HorasAsignadas=? where NumeroEmpleado like '%" + buscar + "%'";
@@ -152,7 +151,8 @@ public class ControlMaestro {
         }
 
     }
-     //C01:MÉTODO  QUE  ELIMINA UN REGISTRO EXISTENTE EN MAESTRO
+    //C01:MÉTODO  QUE  ELIMINA UN REGISTRO EXISTENTE EN MAESTRO
+
     public boolean eliminarMaestro(EntidadMaestro dts) {
         sSQL = "delete from maestro where NumeroEmpleado=?";
         try {
@@ -160,7 +160,7 @@ public class ControlMaestro {
 
             pst.setInt(1, dts.getNumeroEmpleado());
             int n = pst.executeUpdate();
-
+            JOptionPane.showMessageDialog(null, "los datos han sido eliminados satisfactoriamente");
             if (n != 0) {
                 return true;
             } else {
@@ -174,6 +174,7 @@ public class ControlMaestro {
 
     }
 // C02:MÉTODO  QUE HACE  UNA CONSULTA ESPECÍFICA   POR NNUMERO DE EMPLEADO
+
     public String consultarMaestroEspecifico(int buscar) throws SQLException {
         String cadena = "";
         DefaultTableModel modelo;
@@ -199,7 +200,7 @@ public class ControlMaestro {
 
                 modelo.addRow(Maestros);
                 cadena = cadena + numempl + "-" + nombre + "-" + aPaterno + "-" + aMaterno + "-" + HAsignacion;
-                 
+
 //                System.out.println("cadena: " +  cadena);
             }
 

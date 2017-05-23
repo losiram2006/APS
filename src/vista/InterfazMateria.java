@@ -8,10 +8,8 @@ package vista;
 import Controlador.ControlMateria;
 import Modelo.EntidadMateria;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -277,7 +275,7 @@ public class InterfazMateria extends javax.swing.JInternalFrame {
 
         btnSalir.setBackground(new java.awt.Color(102, 102, 102));
         btnSalir.setFont(new java.awt.Font("Bodoni MT", 1, 14)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir-de-mi-perfil-icono-3964-32.png"))); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Salir.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSalir.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -559,33 +557,33 @@ public class InterfazMateria extends javax.swing.JInternalFrame {
 //PBI4: HU12 Como subdirector quiero poder dar de baja a las materias registradas
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
-        String clave = txtClaveMateria.getText();
-
-        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar", "Inane warning", JOptionPane.YES_NO_OPTION);
-
-        if (confirmacion == 0) {
-            int materiaEncontrada = 0;
-            int claveEliminar = Integer.parseInt(clave);
-            try {
-                //MÉTODO   QUE  VALIDA  SI  UNA MATERIA TIENE   UN  HORARIO  REGISTRADO
-                materiaEncontrada = controlMateria.consultarMateriaTieneHorario(claveEliminar);
-                inhabilitar();
-            } catch (SQLException ex) {
-                Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            if (materiaEncontrada == claveEliminar) {
-                JOptionPane.showMessageDialog(rootPane, "LA MATERIA CON CLAVE  " + claveEliminar + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
-                inhabilitar();
-            } else {
-
-                modelMateria.setClave(claveEliminar);
-                //MÉTODO QUE ELIMINA UNA MATERIA EXISTENTE
-                controlMateria.eliminarMateria(modelMateria);
-                mostrar("");
-                inhabilitar();
-            }
-        }
+//        String clave = txtClaveMateria.getText();
+//
+//        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar", "Inane warning", JOptionPane.YES_NO_OPTION);
+//
+//        if (confirmacion == 0) {
+//            int materiaEncontrada = 0;
+//            int claveEliminar = Integer.parseInt(clave);
+//            try {
+//                //MÉTODO   QUE  VALIDA  SI  UNA MATERIA TIENE   UN  HORARIO  REGISTRADO
+//                materiaEncontrada = controlMateria.consultarMateriaTieneHorario(claveEliminar);
+//                inhabilitar();
+//            } catch (SQLException ex) {
+//                Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//            if (materiaEncontrada == claveEliminar) {
+//                JOptionPane.showMessageDialog(rootPane, "LA MATERIA CON CLAVE  " + claveEliminar + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+//                inhabilitar();
+//            } else {
+//
+//                modelMateria.setClave(claveEliminar);
+//                //MÉTODO QUE ELIMINA UNA MATERIA EXISTENTE
+//                controlMateria.eliminarMateria(modelMateria);
+//                mostrar("");
+//                inhabilitar();
+//            }
+//        }
 
     }//GEN-LAST:event_btnEliminarMouseClicked
 
@@ -613,14 +611,15 @@ public class InterfazMateria extends javax.swing.JInternalFrame {
                 //MUESTRA DATOS EN LA TABLA
                 mostrar(buscar);
                 String mensaje = "";
-             //03:MÉTODO QUE  CONSULTA UNA  MATERIA ESPECÍFICA
+                //03:MÉTODO QUE  CONSULTA UNA  MATERIA ESPECÍFICA
                 mensaje = controlMateria.consultarMateriaEspecifico(buscar);
                 if (mensaje.equalsIgnoreCase("")) {
 
                     JOptionPane.showMessageDialog(null, "La Materia no se encuentra registrado", "Inane warning", JOptionPane.WARNING_MESSAGE);
                     txtBuscaMateria.setText("");
                     mostrar("");
-
+                    inhabilitarSeleccion();
+                    
                 } else {
                     //SE PARTE LO QUE  SE RECIBE  PARA ENVIARLOS A CAJAS DE TEXTO
                     mensaj = mensaje.split("-");
@@ -723,7 +722,7 @@ public class InterfazMateria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscaMateriaKeyTyped
 
     private void txtHorasSemanaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHorasSemanaKeyTyped
-         // VALIDA  QUE  SE INGRESEN  SOLO NUMEROS  AL CAMPO HORAS
+        // VALIDA  QUE  SE INGRESEN  SOLO NUMEROS  AL CAMPO HORAS
         char k = evt.getKeyChar();
         if (Character.isLetter(k)) {
             getToolkit().beep();
@@ -738,6 +737,33 @@ public class InterfazMateria extends javax.swing.JInternalFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+        String clave = txtClaveMateria.getText();
+
+        int confirmacion = JOptionPane.showConfirmDialog(null, "Seguro deseas eliminar", "Inane warning", JOptionPane.YES_NO_OPTION);
+
+        if (confirmacion == 0) {
+            int materiaEncontrada = 0;
+            int claveEliminar = Integer.parseInt(clave);
+            try {
+                //MÉTODO   QUE  VALIDA  SI  UNA MATERIA TIENE   UN  HORARIO  REGISTRADO
+                materiaEncontrada = controlMateria.consultarMateriaTieneHorario(claveEliminar);
+                inhabilitar();
+            } catch (SQLException ex) {
+                Logger.getLogger(InterfazMaestro.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            if (materiaEncontrada == claveEliminar) {
+                JOptionPane.showMessageDialog(rootPane, "LA MATERIA CON CLAVE  " + claveEliminar + " NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+                inhabilitar();
+            } else {
+
+                modelMateria.setClave(claveEliminar);
+                //MÉTODO QUE ELIMINA UNA MATERIA EXISTENTE
+                controlMateria.eliminarMateria(modelMateria);
+                mostrar("");
+                inhabilitar();
+            }
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 

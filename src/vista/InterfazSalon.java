@@ -33,7 +33,7 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
         this.setLocation(380, 20);
         this.setTitle("Control de Salon");
         initComponents();
-        mostrar();
+        mostrarDatos();
         inhabilitar();
     }
 
@@ -70,7 +70,7 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
     }
 
 //    MUESTRA  DATOS  EN LA TABLA
-    void mostrar() {
+    void mostrarDatos() {
         try {
 
             Modelo1 = controlSalon.consultarSalon();
@@ -114,10 +114,10 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Detalle Salon", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bodoni MT", 0, 18))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Detalle Salón", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bodoni MT", 0, 18))); // NOI18N
 
         lbNumeroSalon.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbNumeroSalon.setText("Numero de Salon");
+        lbNumeroSalon.setText("Número o nombre de Salón");
 
         txtNumeroSalon.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
         txtNumeroSalon.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -147,10 +147,10 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Consulta Salon", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bodoni MT", 1, 18))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), "Consulta Salón", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Bodoni MT", 1, 18))); // NOI18N
 
         lbBuscarSalon.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lbBuscarSalon.setText("Numero de Salon");
+        lbBuscarSalon.setText("Número o nombre de Salón");
 
         txtBuscarSalon.setFont(new java.awt.Font("Bodoni MT", 0, 18)); // NOI18N
         txtBuscarSalon.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -304,7 +304,7 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
 
         btnSalir.setBackground(new java.awt.Color(102, 102, 102));
         btnSalir.setFont(new java.awt.Font("Bodoni MT", 1, 14)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salir-de-mi-perfil-icono-3964-32.png"))); // NOI18N
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Salir.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSalir.setVerticalAlignment(javax.swing.SwingConstants.TOP);
@@ -369,6 +369,9 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel2.getAccessibleContext().setAccessibleName("Detalle Salón");
+        jPanel3.getAccessibleContext().setAccessibleName("Consulta Salón");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -399,6 +402,24 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "Campo Vacío Ingreso número  o nombre de salon.", "Inane warning", JOptionPane.WARNING_MESSAGE);
 
             } else {
+                
+                String salonEncontrado = "";
+//                System.out.println("salonEncontrado " + salonEncontrado);
+                try {
+
+////          //   PBI1:HU02:01: MÉTODO QUE  VALIDA SI EL  SALON TIENE  UN HORARIO ASIGNADO PARA NO MODIFICARLO
+                    salonEncontrado = controlSalon.consultarSalonEspecifico(salonModificar );
+//                     System.out.println("salonEncontrado " + salonEncontrado);
+                } catch (SQLException ex) {
+                    Logger.getLogger(InterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                if (salonEncontrado.equalsIgnoreCase(salonModificar)) {
+                    System.out.println("salon" + salonEncontrado);
+                    JOptionPane.showMessageDialog(rootPane, "EL Salon  " + salonModificar + " ya  existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    txtNumeroSalon.setText("");
+                    inhabilitar();
+                } else {
                 //AGREGA A MODELO LOS   DATOS
                 modelSalon.setNumeroSalon(salonModificar);
                 System.out.println("salon" + salonModificar);
@@ -406,19 +427,19 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
                 //   PBI1:HU01:01: MÉTODO QUE REGISTRA UN SALON
                 controlSalon.RegistrarSalon(modelSalon);
 //                MUESTRA DATOS EN LA TABLA
-                mostrar();
+                mostrarDatos();
 //                HABILITA BOTONES
                 inhabilitar();
 
-            }
+            } } 
 
         }
 
         if (boton.equalsIgnoreCase("Guardar cambios")) {
             int fila = tbSalon.getSelectedRow();
             String idSalon = tbSalon.getValueAt(fila, 0).toString();
-            String salonExiste=tbSalon.getValueAt(fila, 1).toString();
- //   PBI1:HU02:03: MÉTODO QUE REGISTRA UN SALON VALIDA CAMPO VACÍO
+            String salonExiste = tbSalon.getValueAt(fila, 1).toString();
+            //   PBI1:HU02:03: MÉTODO QUE REGISTRA UN SALON VALIDA CAMPO VACÍO
             if (txtNumeroSalon.getText().equals("")) {
 
                 JOptionPane.showMessageDialog(null, "Campo Vacío Ingreso numero de grupo.", "Inane warning", JOptionPane.WARNING_MESSAGE);
@@ -439,6 +460,7 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
 //                    System.out.println("salon" + salonEncontrado);
                     JOptionPane.showMessageDialog(rootPane, "EL Salon " + salonExiste + " NO SE PUEDE MODIFICAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
                     txtNumeroSalon.setText("");
+                    inhabilitar();
                 } else {
 //          ASIGNA LOS  DATOS AL MODELO
                     modelSalon.setNumeroSalon(salonModificar);
@@ -448,7 +470,7 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
                     try {
                         //           MÉTODO QUE MODIFICA EL  GRUPO
                         controlSalon.modificarSalon(idSalon, txtNumeroSalon.getText());
-                        
+                        inhabilitar();
                     } catch (SQLException ex) {
                         Logger.getLogger(InterfazSalon.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (ClassNotFoundException ex) {
@@ -456,10 +478,9 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
                     }
 
 //                    MUESTRA  LOS DATOS  EN LA TABLA
-                    mostrar();
+                    mostrarDatos();
 //                    HABILITA LOS BOTONES
-                    inhabilitar();
-                     
+
                 }
             }
         }
@@ -498,18 +519,20 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
 // PBI1:HU01: MÉTODO  QUE CONSULTA   SI UN SALON TIENE UN HORARIO  ASIGNADO
             salonEncontrado = controlSalon.consultarSalonTieneHorario(salon);
             System.out.println("salonEncontrado" + salonEncontrado);
+
         } catch (SQLException ex) {
             Logger.getLogger(InterfazSalon.class
                     .getName()).log(Level.SEVERE, null, ex);
         }
 
         if (salonEncontrado.equalsIgnoreCase(idSalon)) {
-            JOptionPane.showMessageDialog(rootPane, "EL SALON "+numEliminar +"  NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(rootPane, "EL SALON " + numEliminar + "  NO SE PUEDE ELIMINAR, TIENE UN HORARIO ASIGNADO", "ERROR", JOptionPane.ERROR_MESSAGE);
+            inhabilitar();
         } else {
 //       PBI1:HU01: MÉTODO  QUE ELIMINA  UN SALÓN
             controlSalon.eliminarSalon(modelSalon);
-            salon="";
-            mostrar();
+            salon = "";
+            mostrarDatos();
             inhabilitar();
 
         }
@@ -538,14 +561,14 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
 
             } else {
 
-                mostrar();
+                mostrarDatos();
                 String mensaje = "";
 //    PBI1:HU01:04: MÉTODO   QUE HACE UNA CONSULTAR ESPECÍFICA
                 mensaje = controlSalon.consultarSalonEspecifico(buscar);
                 if (mensaje.equalsIgnoreCase("")) {
                     JOptionPane.showMessageDialog(null, "El grupo no se encuentra registrado", "Inane warning", JOptionPane.WARNING_MESSAGE);
                     txtBuscarSalon.setText("");
-                    mostrar();
+                    mostrarDatos();
                 } else {
                     habilitar();
                     txtNumeroSalon.setText(mensaje);
@@ -573,7 +596,7 @@ public class InterfazSalon extends javax.swing.JInternalFrame {
 //        else{
         String buscar1 = txtBuscarSalon.getText();
 
-        mostrar();
+        mostrarDatos();
 //            
 //        }
 
